@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ExpandableTextView">
+        <attr name="etv_collapseLines" format="integer" />
+        <attr name="etv_contentTextAppearance" format="reference" />
+        <attr name="etv_toggleTextAppearance" format="reference" />
+        <attr name="etv_collapsedText" format="string" />
+        <attr name="etv_expandedText" format="string" />
+    </declare-styleable>
+
+</resources>

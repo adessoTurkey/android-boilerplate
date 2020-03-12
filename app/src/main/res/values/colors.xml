@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/vibrant_blue</color>
+    <color name="colorPrimaryDark">@color/electric_blue</color>
+    <color name="colorAccent">@color/reddish_orange</color>
+    <color name="reddish_orange">#ff671b</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="black">#231F20</color>
+    <color name="dark_grey">#768992</color>
+    <color name="soft_grey">#E5E5E5</color>
+    <color name="white">#F9FBFC</color>
+    <color name="vibrant_blue">#003dff</color>
+    <color name="electric_blue">#0146ff</color>
+    <color name="almost_black">#08090a</color>
+    <color name="almost_black_60">#6008090a</color>
+    <color name="text_color">@color/almost_black</color>
+    <color name="text_color_60">@color/almost_black_60</color>
+
+</resources>

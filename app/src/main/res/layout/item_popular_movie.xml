@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.adesso.movee.uimodel.MovieUiModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_xxl"
+        android:layout_marginEnd="@dimen/margin_xxl"
+        android:layout_marginBottom="@dimen/margin_large"
+        app:cardCornerRadius="@dimen/radius_small"
+        app:cardElevation="@dimen/elevation_small">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_view_poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                app:imageFromUrl="@{movie.posterPath}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="@string/aspect_ratio_height_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_title"
+                style="@style/TextField.ListItem.PopularMovie.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{movie.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_view_poster"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Joker" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_genres"
+                style="@style/TextField.ListItem.PopularMovie.Genre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{movie.genreString}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_view_poster"
+                app:layout_constraintTop_toBottomOf="@id/text_view_title"
+                tools:text="Crime, Drama, Thriller" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_release_date"
+                style="@style/TextField.ReleaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_popular_movie_release"
+                android:text="@{movie.releaseDateString}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/text_view_genres"
+                app:layout_constraintTop_toBottomOf="@id/text_view_genres"
+                tools:text="04.11.2019" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:alpha="0.2"
+                android:background="@color/text_color"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_release_date"
+                app:layout_constraintEnd_toStartOf="@id/text_view_average"
+                app:layout_constraintStart_toEndOf="@id/text_view_release_date"
+                app:layout_constraintTop_toTopOf="@id/text_view_release_date" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_average"
+                style="@style/TextField.Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="14dp"
+                android:text="@{movie.averageString}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_view_release_date"
+                app:layout_constraintTop_toBottomOf="@id/text_view_genres"
+                tools:text="8.9" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

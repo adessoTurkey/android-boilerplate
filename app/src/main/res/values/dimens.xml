@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Margin Sizes -->
+    <dimen name="margin_xxl">32dp</dimen>
+    <dimen name="margin_extra_large">24dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+
+    <!-- Popular Movie List -->
+    <dimen name="margin_popular_movie_text">10dp</dimen>
+    <dimen name="margin_popular_movie_release">18dp</dimen>
+    <dimen name="padding_popular_movie_drawable">5dp</dimen>
+
+    <!-- Chip -->
+    <dimen name="radius_chip">12dp</dimen>
+    <dimen name="padding_horizontal_chip">10dp</dimen>
+    <dimen name="padding_vertical_chip">4dp</dimen>
+
+    <!-- Width, Height, Sizes, Percents -->
+    <dimen name="size_popup">70dp</dimen>
+    <dimen name="height_popup_button">56dp</dimen>
+    <dimen name="size_bottom_bar_icon">50dp</dimen>
+
+    <!-- Common sizes -->
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="elevation_small">8dp</dimen>
+    <dimen name="radius_popup">16dp</dimen>
+    <dimen name="radius_button">4dp</dimen>
+
+    <!--  TEXT  -->
+    <dimen name="size_button_text">17sp</dimen>
+    <dimen name="size_header_text">24sp</dimen>
+    <dimen name="size_popup_text">16sp</dimen>
+
+</resources>
