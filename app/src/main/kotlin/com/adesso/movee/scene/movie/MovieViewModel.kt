@@ -3,6 +3,7 @@ package com.adesso.movee.scene.movie
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.BaseAndroidViewModel
 import com.adesso.movee.domain.FetchPopularMoviesUseCase
 import com.adesso.movee.internal.util.UseCase
@@ -22,14 +23,10 @@ class MovieViewModel @Inject constructor(
         fetchPopularMovies()
     }
 
-    private fun fetchPopularMovies() {
-        bgScope.launch {
-            val popularMoviesResult = fetchPopularMoviesUseCase.run(UseCase.None)
-
-            onUIThread {
-                popularMoviesResult.either(::handleFailure, ::postPopularMovieList)
-            }
-        }
+    private fun fetchPopularMovies() = viewModelScope.launch {
+        fetchPopularMoviesUseCase
+            .run(UseCase.None)
+            .either(::handleFailure, ::postPopularMovieList)
     }
 
     private fun postPopularMovieList(movies: List<MovieUiModel>) {

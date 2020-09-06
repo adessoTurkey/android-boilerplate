@@ -14,10 +14,7 @@ import com.adesso.movee.internal.popup.PopupUiModel
 import com.adesso.movee.internal.util.Event
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.navigation.NavigationCommand
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.withContext
 
 @Suppress("ConvertSecondaryConstructorToPrimary")
 @SuppressLint("StaticFieldLeak")
@@ -33,9 +30,6 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
     val navigation: LiveData<Event<NavigationCommand>> = _navigation
 
     private val viewModelJob = SupervisorJob()
-
-    protected val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    protected val bgScope = CoroutineScope(Dispatchers.Default + viewModelJob)
 
     protected open fun handleFailure(failure: Failure) {
         val (title, message) = when (failure) {
@@ -97,18 +91,6 @@ abstract class BaseAndroidViewModel(application: Application) : AndroidViewModel
 
     fun navigateBack() {
         _navigation.value = Event(NavigationCommand.Back)
-    }
-
-    protected suspend fun onUIThread(block: suspend CoroutineScope.() -> Unit) {
-        withContext(uiScope.coroutineContext) {
-            block.invoke(this)
-        }
-    }
-
-    protected suspend fun <T> onBackgroundThread(block: suspend CoroutineScope.() -> T): T {
-        return withContext(bgScope.coroutineContext) {
-            block.invoke(this)
-        }
     }
 
     protected fun getString(@StringRes resId: Int): String {
