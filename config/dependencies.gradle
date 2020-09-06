@@ -23,7 +23,7 @@ ext {
     ]
 
     gradle = [
-            gradle: "3.6.1",
+            gradle: "4.0.1",
     ]
 
     version = [
@@ -44,7 +44,7 @@ ext {
             ok2curl         : '0.5.0',
             room            : '1.1.1',
             jUnit           : '4.12',
-            mockito         : '2.13.+',
+            mockito         : '2.2.0',
             lottie          : '3.2.2',
             material        : '1.0.0',
             preference      : '1.1.0',
@@ -52,6 +52,10 @@ ext {
             timber          : '4.7.1',
             spotless        : '3.27.1',
             detekt          : '1.7.3',
+            robolectric     : '4.3.1',
+            arcCoreTesting  : '2.1.0',
+            testCore        : '1.2.0',
+            testExtJunit    : '1.1.1',
     ]
 
     dependency = [
@@ -106,6 +110,12 @@ ext {
 
             commonTest = [
                     "junit:junit:$version.jUnit",
+                    "com.nhaarman.mockitokotlin2:mockito-kotlin:$version.mockito",
+                    "androidx.arch.core:core-testing:$version.arcCoreTesting",
+                    "androidx.test:core:$version.testCore",
+                    "org.robolectric:robolectric:$version.robolectric",
+                    "androidx.test.ext:junit:$version.testExtJunit",
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version.coroutines",
             ],
 
             material = [
@@ -114,6 +124,7 @@ ext {
 
             commonInstrumentationTest = [
                     "com.android.support.test.espresso:espresso-core:$version.espresso",
+                    "androidx.test.ext:junit:$version.testExtJunit",
             ],
 
             commonDebug = [
