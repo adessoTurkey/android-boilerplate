@@ -2,7 +2,6 @@ package com.adesso.movee.internal.databinding
 
 import android.view.View
 import android.widget.ImageView
-import androidx.annotation.Dimension
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
@@ -11,7 +10,6 @@ import com.adesso.movee.R
 import com.adesso.movee.base.BaseListAdapter
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.loadImage
-import com.adesso.movee.internal.util.GridLayoutSpaceItemDecoration
 
 @BindingAdapter("hideIfNull")
 fun setVisible(view: View, obj: Any?) {
@@ -45,12 +43,6 @@ fun setAdapter(view: RecyclerView, adapter: BaseListAdapter<ViewDataBinding, Lis
     adapter?.let {
         view.adapter = it
     }
-}
-
-@BindingAdapter("spaceItemDecoration")
-fun addSpaceItemDecoration(view: RecyclerView, @Dimension space: Float) {
-    val spaceItemDecoration = GridLayoutSpaceItemDecoration(space.toInt())
-    view.addItemDecoration(spaceItemDecoration)
 }
 
 @BindingAdapter("imageFromUrl", "placeholderRes", "errorRes", requireAll = false)
