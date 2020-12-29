@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        apply from: 'config/dependencies.gradle'
+        apply from: 'config/dependencies.gradle', to: it
+        apply from: "$rootDir/config/git-hooks.gradle.kts"
+        classpath "com.android.tools.build:gradle:$it.version.gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$it.compiler.kotlin"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$it.version.navigation"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$it.version.spotless"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version.detekt"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$version.benManesVersion"
+        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$version.junitJacocoPlugin"
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:$version.jltschKtlintPlugin")
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven { url "https://jitpack.io" }
+    }
+
+    afterEvaluate { project ->
+        def buildRelease = 'release'
+        def isReleaseBuild = getCurrentVariant() == buildRelease
+
+        if (isReleaseBuild &&
+                project.hasProperty("android") &&
+                android.signingConfigs.hasProperty(buildRelease)) {
+            try {
+                def propsFile = rootProject.file('keystore.properties')
+                def props = new Properties()
+                props.load(new FileInputStream(propsFile))
+                android.signingConfigs[buildRelease].storeFile = file(props['RELEASE.STORE_FILE'])
+                android.signingConfigs[buildRelease].storePassword = props['RELEASE.STORE_PASSWORD']
+                android.signingConfigs[buildRelease].keyAlias = props['RELEASE.KEY_ALIAS']
+                android.signingConfigs[buildRelease].keyPassword = props['RELEASE.KEY_PASSWORD']
+            } catch (ignored) {
+                throw new InvalidUserDataException(
+                        "You should define\n" +
+                                "'RELEASE.STORE_FILE', \n" +
+                                "'RELEASE.STORE_PASSWORD', \n" +
+                                "'RELEASE.KEY_ALIAS\n" +
+                                "'and " +
+                                "'RELEASE.KEY_PASSWORD'" +
+                                " in keystore.properties. *Rename and update keystore.properties.sample if exists.")
+            }
+        }
+    }
+}
+
+def buildAliases = [
+        'checkFormat': ['detekt', 'ktlintCheck', 'lintDevDebug', 'spotlessCheck'],
+        'reformat'   : ['ktlintFormat', 'spotlessApply'],
+]
+def expandedTaskList = []
+
+gradle.startParameter.taskNames.each {
+    expandedTaskList << (buildAliases[it] ? buildAliases[it] : it)
+}
+
+gradle.startParameter.taskNames = expandedTaskList.flatten()
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def getCurrentVariant() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find()) {
+        return matcher.group(2).toLowerCase()
+    } else {
+        return ""
+    }
+}

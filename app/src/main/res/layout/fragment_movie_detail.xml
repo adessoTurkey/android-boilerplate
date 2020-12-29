@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".scene.moviedetail.MovieDetailFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.adesso.movee.scene.moviedetail.MovieDetailViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout_movie_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/scene_movie_detail">
+
+        <include
+            layout="@layout/layout_movie_detail"
+            app:movieDetail="@{viewModel.movieDetail}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollable_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_extra_small"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/margin_extra_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_overview">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_overview"
+                style="@style/TextField.MovieDetail.Overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.movieDetail.overview}"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>

@@ -1,0 +1,19 @@
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+ktlint {
+    version.set(rootProject.extensions.ext.version.ktlint)
+    debug.set(false)
+    verbose.set(false)
+    android.set(true)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(false)
+    enableExperimentalRules.set(true)
+    additionalEditorconfigFile.set(file("../.editorconfig"))
+
+    filter {
+        exclude("**/generated/**")
+        exclude { projectDir.toURI().relativize(it.file.toURI()).path.contains("/test/") }
+        include("**/kotlin/**")
+    }
+}

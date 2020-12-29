@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieDetail"
+            type="com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel" />
+
+    </data>
+
+    <merge tools:parentTag="androidx.constraintlayout.motion.widget.MotionLayout">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_view_poster"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:imageFromUrl="@{movieDetail.posterPath}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_rating"
+            style="@style/TextField.Rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:text="@{movieDetail.average}"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/background_chip"
+            android:backgroundTint="@color/colorAccent"
+            android:drawableTint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_poster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_view_poster"
+            tools:text="9.9" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_title"
+            style="@style/TextField.MovieDetail.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{movieDetail.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rating"
+            tools:text="Game of Thrones" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_genres"
+            style="@style/TextField.MovieDetail.Genre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{movieDetail.genreString}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title"
+            tools:text="Action, Adventure, Drama" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_runtime"
+            style="@style/TextField.MovieDetail.Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawableTint="@color/tint_movie_item_date"
+            android:text="@{movieDetail.runtime}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_genres"
+            tools:text="57 min" />
+
+        <View
+            android:id="@+id/divider_time"
+            android:layout_width="0.5dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="@dimen/margin_movie_detail_time"
+            android:layout_marginEnd="@dimen/margin_movie_detail_time"
+            android:background="@color/almost_black_60"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_runtime"
+            app:layout_constraintStart_toEndOf="@id/text_view_runtime"
+            app:layout_constraintTop_toTopOf="@id/text_view_runtime" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_release_date"
+            style="@style/TextField.MovieDetail.Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_movie_detail_time"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawableTint="@color/tint_movie_item_date"
+            android:text="@{movieDetail.releaseDate}"
+            app:layout_constraintStart_toEndOf="@id/divider_time"
+            app:layout_constraintTop_toBottomOf="@id/text_view_genres"
+            tools:text="04.01.2019" />
+
+        <View
+            android:id="@+id/divider_overview"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="@dimen/margin_xxl"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_xxl"
+            android:background="@color/almost_black_60"
+            app:layout_constraintTop_toBottomOf="@id/text_view_release_date" />
+
+    </merge>
+
+</layout>

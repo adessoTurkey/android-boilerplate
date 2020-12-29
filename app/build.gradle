@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'androidx.navigation.safeargs'
+apply plugin: "com.github.ben-manes.versions"
+apply from: "$rootDir/config/git-hooks.gradle.kts"
+apply from: "$rootDir/config/detekt.gradle"
+apply from: "$rootDir/config/ktlint.gradle"
+apply from: "$rootDir/config/spotless.gradle"
+
+android {
+    def ext = rootProject.extensions.ext
+    compileSdkVersion ext.android.compileSdk
+
+    defaultConfig {
+        minSdkVersion ext.android.minSdk
+        targetSdkVersion ext.android.targetSdk
+        versionCode ext.application.versionCode
+        versionName ext.application.versionName
+        applicationId ext.application.id
+        testInstrumentationRunner ext.application.testInstrumentationRunner
+        vectorDrawables.useSupportLibrary true
+
+        buildConfigField "String", "BASE_URL", BASE_URL_DEV
+        buildConfigField "String", "API_KEY", "\"" + ext.build.apiKey + "\""
+        buildConfigField 'Boolean', "ENABLE_MOCK", "false"
+        buildConfigField 'Boolean', "ENABLE_LOG", "true"
+    }
+
+    signingConfigs {
+        release
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "Movee [dev]"
+        }
+
+        mock {
+            applicationIdSuffix ".mock"
+            resValue "string", "app_name", "Movee [mock]"
+            buildConfigField 'Boolean', "ENABLE_MOCK", "true"
+        }
+
+        qa {
+            applicationIdSuffix ".qa"
+            resValue "string", "app_name", "Movee [qa]"
+        }
+
+        prd {
+            resValue "string", "variant", "prod"
+            resValue "string", "app_name", "Movee"
+            buildConfigField "String", "BASE_URL", BASE_URL_PRD
+            buildConfigField "String", "API_KEY", "\"" + ext.build.apiKey + "\""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+
+            proguardFile './../config/proguards/arch-component.pro'
+            proguardFile './../config/proguards/navigation.pro'
+            proguardFile './../config/proguards/dagger.pro'
+            proguardFile './../config/proguards/retrofit.pro'
+            proguardFile './../config/proguards/crashlytics-2'
+            proguardFile './../config/proguards/glide.pro'
+            proguardFile './../config/proguards/square-okhttp3.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            buildConfigField 'Boolean', "ENABLE_LOG", "false"
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility compiler.java
+        targetCompatibility compiler.java
+    }
+
+    kotlinOptions {
+        jvmTarget = compiler.java
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    kapt {
+        correctErrorTypes true
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    lintOptions {
+        abortOnError true
+        absolutePaths false
+        lintConfig file("../config/.lint.xml")
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation kotlinn
+    implementation androidx
+    implementation common
+    implementation lifecycle
+    implementation network
+    implementation dagger
+
+    kapt commonKapt
+    kaptTest commonKapt
+    debugImplementation commonDebug
+    releaseImplementation commonRelease
+    testImplementation commonTest
+    androidTestImplementation commonInstrumentationTest
+}
+
+android.variantFilter { variant ->
+    if (variant.buildType.name.equals('release') &&
+            variant.getFlavors().get(0).name.equals('mock')) {
+
+        variant.setIgnore(true)
+    }
+}

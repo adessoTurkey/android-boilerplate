@@ -1,0 +1,27 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+      - 'release/**'
+
+jobs:
+  test:
+    name: Run unit tests & static analysis checks
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Run unit tests
+        run: ./gradlew testDevDebug
+
+      - name: Run static analysis checks
+        run: ./gradlew checkFormat --daemon
