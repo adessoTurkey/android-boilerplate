@@ -118,6 +118,11 @@ If you want to know more about naming convention, code style and more please loo
 - **[Ktlint][ktlint]:** Kotlin linter
 - **[Lint][lint]:** Static program analysis tools
 
+
+## Join the crew!
+
+[Act now to join][linkedin/jobs] our team and become an adessi — enjoy a Great Place to Work!
+
 ## License
 
 ```
@@ -141,3 +146,4 @@ limitations under the License.
 [ktlint]: https://github.com/pinterest/ktlint
 [spotless]: https://github.com/diffplug/spotless       
 [lint]: https://developer.android.com/studio/write/lint
+[linkedin/jobs]: https://www.linkedin.com/jobs/view/1989162077
