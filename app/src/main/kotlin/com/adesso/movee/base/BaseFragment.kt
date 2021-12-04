@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
+abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> :
     DaggerFragment() {
     protected lateinit var decorator: BaseFragmentDecorator<VM, B>
 

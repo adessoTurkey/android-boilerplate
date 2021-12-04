@@ -6,7 +6,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseActivity<VM : BaseAndroidViewModel> : DaggerAppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel> : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

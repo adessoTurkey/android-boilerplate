@@ -18,7 +18,7 @@ import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
+abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBinding> :
     BottomSheetDialogFragment(), HasAndroidInjector {
     protected lateinit var decorator: BaseFragmentDecorator<VM, B>
 
