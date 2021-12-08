@@ -30,7 +30,7 @@ class MovieDetailViewModel @Inject constructor(
         if (failure is Failure.NoConnectivityError) {
             navigate(
                 PopupModel(
-                    message = resProvider.getString(R.string.common_error_network_connection)
+                    message = getString(R.string.common_error_network_connection)
                 ),
                 listener = PopupListener(
                     onPositiveButtonClick = { navigateBack() }

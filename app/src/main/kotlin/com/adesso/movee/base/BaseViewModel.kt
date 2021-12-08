@@ -11,6 +11,7 @@ import com.adesso.movee.internal.popup.PopupListener
 import com.adesso.movee.internal.popup.PopupModel
 import com.adesso.movee.internal.util.Event
 import com.adesso.movee.internal.util.Failure
+import com.adesso.movee.internal.util.ResourceProvider
 import com.adesso.movee.navigation.NavigationCommand
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ import javax.inject.Inject
 abstract class BaseViewModel : ViewModel() {
 
     @Inject
-    lateinit var resProvider: ResProvider
+    lateinit var resourceProvider: ResourceProvider
 
     private val _failurePopup = MutableLiveData<Event<PopupModel>>()
     val failurePopup: LiveData<Event<PopupModel>> get() = _failurePopup
@@ -30,14 +31,14 @@ abstract class BaseViewModel : ViewModel() {
     protected open fun handleFailure(failure: Failure) {
         val message = when (failure) {
             is Failure.NoConnectivityError ->
-                resProvider.getString(R.string.common_error_network_connection)
+                getString(R.string.common_error_network_connection)
             is Failure.ApiError ->
                 failure.message
             is Failure.UnknownError ->
                 failure.exception.localizedMessage
-                    ?: resProvider.getString(R.string.common_error_unknown)
+                    ?: getString(R.string.common_error_unknown)
             is Failure.TimeOutError ->
-                resProvider.getString(R.string.common_error_timeout)
+                getString(R.string.common_error_timeout)
             else ->
                 failure.message ?: failure.toString()
         }
@@ -58,7 +59,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun navigate(@StringRes deepLinkRes: Int) {
-        navigate(resProvider.getString(deepLinkRes))
+        navigate(getString(deepLinkRes))
     }
 
     fun navigate(model: PopupModel, listener: PopupListener?) {
@@ -67,5 +68,9 @@ abstract class BaseViewModel : ViewModel() {
 
     fun navigateBack() {
         _navigation.value = Event(NavigationCommand.Back)
+    }
+
+    protected fun getString(@StringRes resId: Int): String {
+        return resourceProvider.getString(resId)
     }
 }
