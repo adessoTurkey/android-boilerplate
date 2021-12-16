@@ -3,16 +3,23 @@ package com.adesso.movee.internal.injection.module
 import android.content.Context
 import com.adesso.movee.BuildConfig
 import com.adesso.movee.data.remote.api.MovieService
+import com.adesso.movee.internal.util.DateAdapter
+import com.adesso.movee.internal.util.ImageJsonAdapter
 import com.adesso.movee.internal.util.NetworkStateHolder
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
 import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.moczul.ok2curl.CurlInterceptor
+import com.serjltt.moshi.adapters.Wrapped
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -21,6 +28,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
+@InstallIn(SingletonComponent::class)
 internal class NetworkModule {
 
     companion object {
@@ -47,7 +55,8 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideChuckerInterceptor(context: Context) = ChuckerInterceptor(context)
+    fun provideChuckerInterceptor(@ApplicationContext context: Context) =
+        ChuckerInterceptor(context)
 
     @Provides
     @Singleton
@@ -84,5 +93,16 @@ internal class NetworkModule {
     @Singleton
     fun provideMovieService(retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .add(ImageJsonAdapter())
+            .add(DateAdapter())
+            .add(Wrapped.ADAPTER_FACTORY)
+            .build()
     }
 }

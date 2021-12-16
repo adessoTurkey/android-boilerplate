@@ -24,7 +24,7 @@ ext {
 
     version = [
             gradle               : '4.1.1',
-            dagger               : '2.30.1',
+            hilt                 : '2.38.1',
             retrofit             : '2.9.0',
             okhttp               : '4.9.0',
             moshi                : '1.11.0',
@@ -81,9 +81,8 @@ ext {
                     "androidx.lifecycle:lifecycle-livedata-ktx:$version.lifecycle",
             ],
 
-            dagger = [
-                    "com.google.dagger:dagger:$version.dagger",
-                    "com.google.dagger:dagger-android-support:$version.dagger",
+            hiltt = [
+                    "com.google.dagger:hilt-android:$version.hilt",
             ],
 
             common = [
@@ -93,8 +92,7 @@ ext {
 
             commonKapt = [
                     "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle",
-                    "com.google.dagger:dagger-compiler:$version.dagger",
-                    "com.google.dagger:dagger-android-processor:$version.dagger",
+                    "com.google.dagger:hilt-android-compiler:$version.hilt",
                     "androidx.databinding:databinding-compiler:$version.gradle",
             ],
 

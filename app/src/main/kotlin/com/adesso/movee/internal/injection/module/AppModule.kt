@@ -1,42 +1,30 @@
 package com.adesso.movee.internal.injection.module
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.adesso.movee.internal.injection.DaggerApplication
 import com.adesso.movee.internal.util.ResourceProvider
 import com.adesso.movee.internal.util.ResourceProviderImpl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module(includes = [MoshiModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 internal class AppModule {
 
     @Provides
     @Singleton
-    internal fun provideApplicationContext(application: DaggerApplication): Context {
-        return application.applicationContext
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     @Provides
     @Singleton
-    internal fun provideApplication(application: DaggerApplication): Application {
-        return application
-    }
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(application: Application): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(
-            application.applicationContext
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideResourceProvider(application: Application): ResourceProvider {
-        return ResourceProviderImpl(application.applicationContext)
+    fun provideResourceProvider(@ApplicationContext context: Context): ResourceProvider {
+        return ResourceProviderImpl(context)
     }
 }

@@ -17,6 +17,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$it.version.navigation"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$it.version.spotless"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$version.detekt"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$version.hilt"
         classpath "com.github.ben-manes:gradle-versions-plugin:$version.benManesVersion"
         classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:$version.junitJacocoPlugin"
         classpath("org.jlleitschuh.gradle:ktlint-gradle:$version.jltschKtlintPlugin")

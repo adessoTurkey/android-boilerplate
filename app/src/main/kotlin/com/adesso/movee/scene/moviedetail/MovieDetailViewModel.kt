@@ -11,9 +11,11 @@ import com.adesso.movee.internal.popup.PopupListener
 import com.adesso.movee.internal.popup.PopupModel
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     application: Application,
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase

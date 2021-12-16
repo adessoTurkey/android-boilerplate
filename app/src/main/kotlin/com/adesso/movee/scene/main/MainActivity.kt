@@ -12,12 +12,16 @@ import com.adesso.movee.databinding.ActivityMainBinding
 import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.extension.showPopup
 import com.adesso.movee.navigation.NavigationCommand
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     override val layoutId get() = R.layout.activity_main
 
     val navController: NavController by lazy { findNavController(R.id.main_host_fragment) }
+
+    override fun getViewModelClass() = MainViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
