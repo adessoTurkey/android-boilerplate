@@ -4,6 +4,7 @@ import androidx.core.net.toUri
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -14,15 +15,20 @@ import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import java.lang.reflect.ParameterizedType
 
 class BaseFragmentDecorator<VM : BaseAndroidViewModel, B : ViewDataBinding>(
     val fragment: Fragment,
     val binder: B,
-    val vMClass: Class<VM>
+    val viewModelStoreOwner: ViewModelStoreOwner
 ) {
-
+    @Suppress("UNCHECKED_CAST")
     val viewModel by lazyThreadSafetyNone {
-        return@lazyThreadSafetyNone ViewModelProvider(fragment)[vMClass]
+        val persistentViewModelClass = (fragment.javaClass.genericSuperclass as ParameterizedType)
+            .actualTypeArguments[0] as Class<VM>
+        return@lazyThreadSafetyNone ViewModelProvider(viewModelStoreOwner).get(
+            persistentViewModelClass
+        )
     }
 
     init {

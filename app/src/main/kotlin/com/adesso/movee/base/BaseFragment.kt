@@ -16,8 +16,6 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> : Fr
     protected val binder get() = decorator.binder
     protected val viewModel get() = decorator.viewModel
 
-    abstract fun getViewModelClass(): Class<VM>
-
     @get:LayoutRes
     abstract val layoutId: Int
 
@@ -29,7 +27,7 @@ abstract class BaseFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> : Fr
         savedInstanceState: Bundle?
     ): View? {
         val binder: B = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        decorator = BaseFragmentDecorator(this, binder, getViewModelClass())
+        decorator = BaseFragmentDecorator(this, binder, this)
 
         initialize()
 

@@ -12,8 +12,6 @@ class MovieDetailFragment :
 
     private val args by navArgs<MovieDetailFragmentArgs>()
 
-    override fun getViewModelClass() = MovieDetailViewModel::class.java
-
     override val layoutId = R.layout.fragment_movie_detail
 
     override fun initialize() {

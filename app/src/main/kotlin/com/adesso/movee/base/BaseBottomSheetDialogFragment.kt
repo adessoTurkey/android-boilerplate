@@ -36,7 +36,7 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
         savedInstanceState: Bundle?
     ): View? {
         val binder: B = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        decorator = BaseFragmentDecorator(this, binder, getViewModelClass())
+        decorator = BaseFragmentDecorator(this, binder, this)
 
         initialize()
         return binder.root

@@ -11,8 +11,6 @@ class MovieListFragment :
 
     override val layoutId: Int get() = R.layout.fragment_movie_list
 
-    override fun getViewModelClass() = MovieListViewModel::class.java
-
     override fun initialize() {
         binder.movieAdapter = MovieListAdapter(viewModel)
     }

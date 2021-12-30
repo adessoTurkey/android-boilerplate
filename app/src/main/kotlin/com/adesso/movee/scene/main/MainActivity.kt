@@ -21,8 +21,6 @@ class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     val navController: NavController by lazy { findNavController(R.id.main_host_fragment) }
 
-    override fun getViewModelClass() = MainViewModel::class.java
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
