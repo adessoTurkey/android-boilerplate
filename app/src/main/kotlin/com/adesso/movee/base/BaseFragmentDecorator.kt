@@ -26,9 +26,7 @@ class BaseFragmentDecorator<VM : BaseAndroidViewModel, B : ViewDataBinding>(
     val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (fragment.javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProvider(viewModelStoreOwner).get(
-            persistentViewModelClass
-        )
+        return@lazyThreadSafetyNone ViewModelProvider(viewModelStoreOwner)[persistentViewModelClass]
     }
 
     init {

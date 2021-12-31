@@ -11,6 +11,6 @@ abstract class BaseActivity<VM : BaseAndroidViewModel> : AppCompatActivity() {
     protected val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProvider(this).get(persistentViewModelClass)
+        return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
     }
 }

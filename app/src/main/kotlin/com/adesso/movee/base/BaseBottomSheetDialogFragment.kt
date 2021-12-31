@@ -22,8 +22,6 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : View
 
     abstract fun initialize()
 
-    abstract fun getViewModelClass(): Class<VM>
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
