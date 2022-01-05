@@ -21,7 +21,7 @@ import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import java.lang.reflect.ParameterizedType
 
-class BaseFragmentDecorator<VM : BaseAndroidViewModel, B : ViewDataBinding>(
+class BaseFragmentDecorator<VM : BaseViewModel, B : ViewDataBinding>(
     val fragment: Fragment,
     val binder: B,
     val viewModelFactory: ViewModelProvider.Factory

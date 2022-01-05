@@ -1,11 +1,10 @@
 package com.adesso.movee.scene.moviedetail
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.R
-import com.adesso.movee.base.BaseAndroidViewModel
+import com.adesso.movee.base.BaseViewModel
 import com.adesso.movee.domain.FetchMovieDetailFlowUseCase
 import com.adesso.movee.internal.popup.PopupListener
 import com.adesso.movee.internal.popup.PopupModel
@@ -17,9 +16,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel @Inject constructor(
-    application: Application,
     private val fetchMovieDetailFlowUseCase: FetchMovieDetailFlowUseCase
-) : BaseAndroidViewModel(application) {
+) : BaseViewModel() {
 
     private val _movieDetail = MutableLiveData<MovieDetailUiModel>()
     val movieDetail: LiveData<MovieDetailUiModel> get() = _movieDetail

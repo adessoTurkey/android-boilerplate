@@ -1,6 +1,5 @@
 package com.adesso.movee.scene.moviedetail
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adesso.movee.domain.FetchMovieDetailFlowUseCase
 import com.adesso.movee.internal.popup.PopupModel
@@ -52,16 +51,13 @@ class MovieDetailViewModelTest {
     @MockK
     lateinit var useCase: FetchMovieDetailFlowUseCase
 
-    @MockK
-    lateinit var application: Application
-
     private val testDispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         MockKAnnotations.init(this)
-        viewModel = MovieDetailViewModel(application, useCase)
+        viewModel = MovieDetailViewModel(useCase)
     }
 
     @After

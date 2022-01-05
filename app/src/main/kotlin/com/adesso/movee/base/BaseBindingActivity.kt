@@ -5,7 +5,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 
-abstract class BaseBindingActivity<VM : BaseAndroidViewModel, B : ViewDataBinding> :
+abstract class BaseBindingActivity<VM : BaseViewModel, B : ViewDataBinding> :
     BaseActivity<VM>() {
 
     protected val binder by lazyThreadSafetyNone<B> {

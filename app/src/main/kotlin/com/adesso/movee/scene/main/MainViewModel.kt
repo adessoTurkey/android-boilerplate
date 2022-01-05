@@ -1,9 +1,6 @@
 package com.adesso.movee.scene.main
 
-import android.app.Application
-import com.adesso.movee.base.BaseAndroidViewModel
+import com.adesso.movee.base.BaseViewModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
-    application: Application
-) : BaseAndroidViewModel(application)
+class MainViewModel @Inject constructor() : BaseViewModel()
