@@ -146,3 +146,6 @@ android.variantFilter { variant ->
         variant.setIgnore(true)
     }
 }
+repositories {
+    mavenCentral()
+}

@@ -9,18 +9,19 @@
     <application
         android:name=".application.MainApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".scene.splash.SplashActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash">
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Splash"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,8 @@
         <activity
             android:name=".scene.main.MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme" />
 
     </application>
 

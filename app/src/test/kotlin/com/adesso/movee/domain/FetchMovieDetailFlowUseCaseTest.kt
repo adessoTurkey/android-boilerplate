@@ -61,7 +61,7 @@ class FetchMovieDetailFlowUseCaseTest {
 
     @Test
     fun `when use case execute method called should return flow response`() = runBlocking {
-        val movieId = 100L
+        val movieId = 1L
 
         // given
         coEvery { repo.fetchMovieDetailFlow(any()) } coAnswers {

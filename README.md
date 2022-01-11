@@ -1,8 +1,8 @@
 ![GitHub Actions](https://github.com/adessoTurkey/android-boilerplate/workflows/PR%20Checks/badge.svg) 
 [![CircleCI](https://circleci.com/gh/adessoTurkey/android-boilerplate.svg?style=shield)](https://circleci.com/gh/adessoTurkey/android-boilerplate) 
 [![CodeStyle](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-[![Kotlin Version](https://img.shields.io/badge/kotlin-1.4.21-blue.svg)](http://kotlinlang.org/)
-[![Gradle](https://img.shields.io/badge/gradle-6.7.1-blue.svg)](https://lv.binarybabel.org/catalog/gradle/latest)
+[![Kotlin Version](https://img.shields.io/badge/kotlin-1.6.10-blue.svg)](http://kotlinlang.org/)
+[![Gradle](https://img.shields.io/badge/gradle-7.3.3-blue.svg)](https://lv.binarybabel.org/catalog/gradle/latest)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -126,7 +126,7 @@ If you want to know more about naming convention, code style and more please loo
 ## License
 
 ```
-Copyright 2020 adesso Turkey
+Copyright 2022 adesso Turkey
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

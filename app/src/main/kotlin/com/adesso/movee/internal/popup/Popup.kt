@@ -26,9 +26,9 @@ class Popup(
         val resources = alertDialogBuilder.context.resources
         listener?.let {
             val positiveButtonText =
-                model.positiveButtonText ?: resources.getString(android.R.string.yes)
+                model.positiveButtonText ?: resources.getString(android.R.string.ok)
             val negativeButtonText =
-                model.negativeButtonText ?: resources.getString(android.R.string.no)
+                model.negativeButtonText ?: resources.getString(android.R.string.cancel)
 
             it.onPositiveButtonClick?.let {
                 setPositiveButton(positiveButtonText) { _, _ -> it.invoke() }

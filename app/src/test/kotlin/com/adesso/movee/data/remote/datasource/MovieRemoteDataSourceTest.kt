@@ -8,7 +8,6 @@ import com.adesso.movee.internal.util.Failure
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import java.util.Date
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -23,6 +22,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 class MovieRemoteDataSourceTest {

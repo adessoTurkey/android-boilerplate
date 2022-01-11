@@ -28,6 +28,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_extra_small"
             android:clipToPadding="false"
+            android:fillViewport="true"
             android:paddingBottom="@dimen/margin_extra_large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

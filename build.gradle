@@ -3,7 +3,6 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-        jcenter()
         google()
         mavenCentral()
     }
@@ -25,7 +24,6 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
         google()
         maven { url "https://jitpack.io" }
     }
@@ -61,7 +59,7 @@ allprojects {
 
 def buildAliases = [
         'checkFormat': ['detekt', 'ktlintCheck', 'lintDevDebug', 'spotlessCheck'],
-        'reformat'   : ['ktlintFormat', 'spotlessApply'],
+        'reformat'   : ['ktlintFormat', 'spotlessApply']
 ]
 def expandedTaskList = []
 
