@@ -6,6 +6,9 @@ import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
 import com.adesso.movee.scene.movielist.model.MovieUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 @Singleton
 class MovieRepository @Inject constructor(
@@ -23,5 +26,12 @@ class MovieRepository @Inject constructor(
         val movieDetailResponse = remoteDataSource.fetchMovieDetail(id)
 
         return mapper.toUiModel(movieDetailResponse)
+    }
+
+    suspend fun fetchMovieDetailFlow(id: Long): Flow<MovieDetailUiModel> = flow {
+        remoteDataSource.fetchMovieDetailFlow(id)
+            .collect {
+                emit(mapper.toUiModel(it))
+            }
     }
 }

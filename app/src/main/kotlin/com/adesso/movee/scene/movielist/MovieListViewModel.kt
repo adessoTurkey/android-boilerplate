@@ -1,10 +1,9 @@
 package com.adesso.movee.scene.movielist
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.adesso.movee.base.BaseAndroidViewModel
+import com.adesso.movee.base.BaseViewModel
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.scene.movielist.model.MovieUiModel
@@ -14,9 +13,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    application: Application,
     private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase
-) : BaseAndroidViewModel(application), MovieItemListener {
+) : BaseViewModel(), MovieItemListener {
 
     private val _nowPlayingMovies = MutableLiveData<List<MovieUiModel>>()
     val nowPlayingMovies: LiveData<List<MovieUiModel>> get() = _nowPlayingMovies

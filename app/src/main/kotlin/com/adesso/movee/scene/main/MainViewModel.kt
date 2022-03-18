@@ -7,5 +7,4 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    application: Application
-) : BaseAndroidViewModel(application)
+) : BaseViewModel()
