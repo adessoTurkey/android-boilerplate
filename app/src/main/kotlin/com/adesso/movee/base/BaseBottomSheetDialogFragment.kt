@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialogFragment<VM : BaseAndroidViewModel, B : ViewDataBinding> :
+abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBinding> :
     BottomSheetDialogFragment() {
 
     protected lateinit var decorator: BaseFragmentDecorator<VM, B>

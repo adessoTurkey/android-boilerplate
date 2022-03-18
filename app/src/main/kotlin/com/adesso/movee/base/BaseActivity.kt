@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseActivity<VM : BaseAndroidViewModel> : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     @Suppress("UNCHECKED_CAST")
     protected val viewModel by lazyThreadSafetyNone {
