@@ -2,7 +2,7 @@ package com.adesso.movee.scene.moviedetail.model
 
 import android.os.Parcelable
 import com.adesso.movee.scene.movielist.model.MovieGenreItemUiModel
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieDetailUiModel(

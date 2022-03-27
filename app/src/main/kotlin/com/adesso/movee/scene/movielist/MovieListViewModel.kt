@@ -21,7 +21,7 @@ class MovieListViewModel @Inject constructor(
         fetchNowPlayingMovies()
     }
 
-    private fun fetchNowPlayingMovies() = viewModelScope.launch {
+    internal fun fetchNowPlayingMovies() = viewModelScope.launch {
         fetchNowPlayingMoviesUseCase
             .run(UseCase.None)
             .either(::handleFailure, ::postNowPlayingMovies)
