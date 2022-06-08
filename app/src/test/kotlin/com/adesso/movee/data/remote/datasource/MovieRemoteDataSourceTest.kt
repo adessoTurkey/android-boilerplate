@@ -41,7 +41,7 @@ class MovieRemoteDataSourceTest {
 
     private val apiErrorMessage = "Undefined Movie ID"
     private val mockMovieDetailFailureModel =
-        Failure.ApiError(code = 201, message = apiErrorMessage)
+        Failure.NetworkError(message = apiErrorMessage)
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -87,16 +87,15 @@ class MovieRemoteDataSourceTest {
 
         // given
         coEvery { service.fetchMovieDetail(movieId) } coAnswers {
-            throw Failure.ApiError(201, apiErrorMessage)
+            throw Failure.NetworkError(apiErrorMessage)
         }
 
         // then
         remoteDataSource.fetchMovieDetailFlow(movieId).catch {
-            assertTrue(it is Failure.ApiError)
+            assertTrue(it is Failure.NetworkError)
 
-            val failure = it as? Failure.ApiError
+            val failure = it as? Failure.NetworkError
 
-            assertEquals(failure?.code, mockMovieDetailFailureModel.code)
             assertEquals(failure?.message, mockMovieDetailFailureModel.message)
         }.collect()
     }

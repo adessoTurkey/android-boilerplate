@@ -84,7 +84,7 @@ ext {
             ],
 
             hiltt = [
-                    "com.google.dagger:hilt-android:$version.hilt",
+                    "com.google.dagger:hilt-android:$version.hilt"
             ],
 
             common = [
@@ -95,7 +95,7 @@ ext {
             commonKapt = [
                     "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle",
                     "com.google.dagger:hilt-android-compiler:$version.hilt",
-                    "androidx.databinding:databinding-compiler:$version.gradle",
+                    "androidx.databinding:databinding-compiler:$version.gradle"
             ],
 
             network = [

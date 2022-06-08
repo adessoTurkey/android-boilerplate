@@ -19,6 +19,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,7 +41,7 @@ class MovieDetailViewModelTest {
 
     private val apiErrorMessage = "Undefined Movie ID"
     private val mockMovieDetailFailureModel =
-        Failure.ApiError(code = 201, message = apiErrorMessage)
+        Failure.NetworkError(message = apiErrorMessage)
     private val exceptedFailurePopupModel = PopupModel(message = apiErrorMessage)
 
     @get:Rule
@@ -97,7 +98,7 @@ class MovieDetailViewModelTest {
             viewModel.fetchMovieDetail(movieId)
 
             // then
-            assertEquals(viewModel.movieDetail.value, null)
+            assertNull(viewModel.movieDetail.value)
             assertEquals(
                 viewModel.failurePopup.value?.peekContent()?.message,
                 Event(exceptedFailurePopupModel).peekContent().message

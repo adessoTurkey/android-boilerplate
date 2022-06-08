@@ -15,7 +15,6 @@ import com.adesso.movee.internal.util.ResourceProvider
 import com.adesso.movee.navigation.NavigationCommand
 import javax.inject.Inject
 
-@Suppress("ConvertSecondaryConstructorToPrimary")
 @SuppressLint("StaticFieldLeak")
 abstract class BaseViewModel : ViewModel() {
 
@@ -32,13 +31,17 @@ abstract class BaseViewModel : ViewModel() {
         val message = when (failure) {
             is Failure.NoConnectivityError ->
                 getString(R.string.common_error_network_connection)
-            is Failure.ApiError ->
+
+            is Failure.NetworkError ->
                 failure.message
+
             is Failure.UnknownError ->
                 failure.exception.localizedMessage
                     ?: getString(R.string.common_error_unknown)
+
             is Failure.TimeOutError ->
                 getString(R.string.common_error_timeout)
+
             else ->
                 failure.message ?: failure.toString()
         }

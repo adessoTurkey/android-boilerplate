@@ -51,6 +51,7 @@ sealed class NetworkEvent {
     data class LinkPropertyChanged(val old: LinkProperties?) : NetworkEvent()
 }
 
+// TODO : network call adapter içerisine inject edilmeli
 object NetworkStateHolder : NetworkState {
 
     private lateinit var holder: NetworkStateImp
