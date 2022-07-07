@@ -47,8 +47,6 @@ class BaseFragmentDecorator<VM : BaseViewModel, B : ViewDataBinding>(
                 handleNavigation(command)
             }
         }
-        // fragment.viewLifecycleOwner.observeEvent(viewModel.navigation, ::handleNavigation)
-        // viewModel.navigation.observeEvent(fragment.viewLifecycleOwner, ::handleNavigation)
     }
 
     private fun handleNavigation(command: NavigationCommand) {
