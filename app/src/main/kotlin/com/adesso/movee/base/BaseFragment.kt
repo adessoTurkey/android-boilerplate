@@ -28,15 +28,15 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
 
     internal lateinit var binder: B
 
+    @get:LayoutRes
+    abstract val layoutId: Int
+
     @Suppress("UNCHECKED_CAST")
-    val viewModel by lazyThreadSafetyNone {
+    protected open val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
         return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
     }
-
-    @get:LayoutRes
-    abstract val layoutId: Int
 
     private var snackbar: Snackbar? = null
     private var networkStateBar: Snackbar? = null
@@ -103,7 +103,11 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
 
     private fun showSnackBarMessage(message: String) {
         context?.let {
-            try { snackbar?.dismiss() } catch (ex: Exception) { ex.printStackTrace() }
+            try {
+                snackbar?.dismiss()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
             snackbar = Snackbar.make(
                 binder.root,
                 message,

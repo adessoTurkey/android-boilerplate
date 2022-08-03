@@ -30,15 +30,15 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBin
     @get:LayoutRes
     abstract val layoutId: Int
 
+    open fun initialize() {
+        // Do nothing in here. Child classes should implement when necessary
+    }
+
     @Suppress("UNCHECKED_CAST")
-    val viewModel by lazyThreadSafetyNone {
+    protected open val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
         return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
-    }
-
-    open fun initialize() {
-        // Do nothing in here. Child classes should implement when necessary
     }
 
     override fun onCreateView(
