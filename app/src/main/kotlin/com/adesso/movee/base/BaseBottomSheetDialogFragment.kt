@@ -5,20 +5,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import com.adesso.movee.BR
+import com.adesso.movee.internal.extension.observeNonNull
+import com.adesso.movee.internal.extension.showPopup
+import com.adesso.movee.internal.util.functional.lazyThreadSafetyNone
+import com.adesso.movee.navigation.NavigationCommand
+import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
+import java.lang.reflect.ParameterizedType
 
 abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBinding> :
     BottomSheetDialogFragment() {
 
-    protected lateinit var decorator: BaseFragmentDecorator<VM, B>
-
     protected lateinit var binder: B
-    protected val viewModel get() = decorator.viewModel
 
     @get:LayoutRes
     abstract val layoutId: Int
+
+    @Suppress("UNCHECKED_CAST")
+    val viewModel by lazyThreadSafetyNone {
+        val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
+            .actualTypeArguments[0] as Class<VM>
+        return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
+    }
 
     open fun initialize() {
         // Do nothing in here. Child classes should implement when necessary
