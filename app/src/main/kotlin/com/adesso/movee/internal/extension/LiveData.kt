@@ -9,10 +9,7 @@ fun <T> MutableLiveData<T>.notifyDataChange() {
 }
 
 fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, observer: (t: T) -> Unit) {
-    this.observe(
-        owner,
-        {
-            it?.let(observer)
-        }
-    )
+    this.observe(owner) {
+        it?.let(observer)
+    }
 }

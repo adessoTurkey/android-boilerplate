@@ -4,7 +4,9 @@ import androidx.navigation.fragment.navArgs
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseFragment
 import com.adesso.movee.databinding.FragmentMovieDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailFragment :
     BaseFragment<MovieDetailViewModel, FragmentMovieDetailBinding>() {
 

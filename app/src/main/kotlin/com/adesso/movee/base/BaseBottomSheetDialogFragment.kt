@@ -1,23 +1,17 @@
 package com.adesso.movee.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.adesso.movee.BR
 import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.extension.showPopup
@@ -26,21 +20,10 @@ import com.adesso.movee.navigation.NavigationCommand
 import com.adesso.movee.scene.main.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 
 abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBinding> :
-    BottomSheetDialogFragment(), HasAndroidInjector {
-
-    @Inject
-    lateinit var childFragmentInjector: DispatchingAndroidInjector<Any>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    BottomSheetDialogFragment() {
 
     protected lateinit var binder: B
 
@@ -55,33 +38,8 @@ abstract class BaseBottomSheetDialogFragment<VM : BaseViewModel, B : ViewDataBin
     protected open val viewModel by lazyThreadSafetyNone {
         val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
             .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProvider(this, viewModelFactory)
-            .get(persistentViewModelClass)
+        return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
     }
-
-    protected inline fun <reified VM : ViewModel> activityViewModels(): Lazy<VM> {
-        return activityViewModels { viewModelFactory }
-    }
-
-    protected inline fun <reified VM : ViewModel> viewModels(): Lazy<VM> {
-        return viewModels { viewModelFactory }
-    }
-
-    protected inline fun <reified VM : ViewModel> parentViewModels(): Lazy<VM> {
-        return requireParentFragment().viewModels { viewModelFactory }
-    }
-
-    protected inline fun <reified VM : ViewModel> navGraphViewModels(@IdRes navGraphId: Int):
-        Lazy<VM> {
-        return navGraphViewModels(navGraphId) { viewModelFactory }
-    }
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = childFragmentInjector
 
     override fun onCreateView(
         inflater: LayoutInflater,

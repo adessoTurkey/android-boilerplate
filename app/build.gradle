@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: "com.github.ben-manes.versions"
+apply plugin: "dagger.hilt.android.plugin"
 apply from: "$rootDir/config/git-hooks.gradle.kts"
 apply from: "$rootDir/config/detekt.gradle"
 apply from: "$rootDir/config/ktlint.gradle"
@@ -129,7 +130,7 @@ dependencies {
     implementation common
     implementation lifecycle
     implementation network
-    implementation dagger
+    implementation hiltt
 
     kapt commonKapt
     kaptTest commonKapt

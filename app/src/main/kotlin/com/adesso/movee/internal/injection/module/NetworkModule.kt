@@ -14,6 +14,9 @@ import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
@@ -22,6 +25,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
+@InstallIn(SingletonComponent::class)
 internal class NetworkModule {
 
     companion object {
@@ -48,7 +52,7 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideChuckerInterceptor(context: Context): ChuckerInterceptor {
+    internal fun provideChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor {
         return ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).build()
     }
 

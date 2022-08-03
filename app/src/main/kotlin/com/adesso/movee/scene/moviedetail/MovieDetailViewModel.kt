@@ -10,11 +10,13 @@ import com.adesso.movee.internal.popup.PopupListener
 import com.adesso.movee.internal.popup.PopupModel
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val fetchMovieDetailFlowUseCase: FetchMovieDetailFlowUseCase
 ) : BaseViewModel() {

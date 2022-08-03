@@ -7,9 +7,11 @@ import com.adesso.movee.base.BaseViewModel
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.scene.movielist.model.MovieUiModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase
 ) : BaseViewModel(), MovieItemListener {

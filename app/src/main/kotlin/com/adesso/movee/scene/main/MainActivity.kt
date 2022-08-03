@@ -12,7 +12,9 @@ import com.adesso.movee.databinding.ActivityMainBinding
 import com.adesso.movee.internal.extension.observeNonNull
 import com.adesso.movee.internal.extension.showPopup
 import com.adesso.movee.navigation.NavigationCommand
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseBindingActivity<MainViewModel, ActivityMainBinding>() {
 
     override val layoutId get() = R.layout.activity_main
