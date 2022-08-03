@@ -7,6 +7,7 @@ import com.adesso.movee.internal.util.NetworkStateHolder
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
 import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
+import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.moczul.ok2curl.CurlInterceptor
 import com.squareup.moshi.Moshi
@@ -51,8 +52,9 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideChuckerInterceptor(@ApplicationContext context: Context) =
-        ChuckerInterceptor(context)
+    internal fun provideChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor {
+        return ChuckerInterceptor.Builder(context).collector(ChuckerCollector(context)).build()
+    }
 
     @Provides
     @Singleton

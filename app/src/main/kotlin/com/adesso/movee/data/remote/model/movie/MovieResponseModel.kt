@@ -4,7 +4,7 @@ import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
 import com.squareup.moshi.Json
 import java.util.Date
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieResponseModel(

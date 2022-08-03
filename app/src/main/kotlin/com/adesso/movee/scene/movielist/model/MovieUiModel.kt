@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.formatDate
 import java.util.Date
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieUiModel(
