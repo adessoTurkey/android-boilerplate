@@ -31,18 +31,18 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(
     @get:LayoutRes
     abstract val layoutId: Int
 
-    @Suppress("UNCHECKED_CAST")
-    protected open val viewModel by lazyThreadSafetyNone {
-        val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<VM>
-        return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
-    }
-
     private var snackbar: Snackbar? = null
     private var networkStateBar: Snackbar? = null
 
     open fun initialize() {
         // Do nothing in here. Child classes should implement when necessary
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    protected open val viewModel by lazyThreadSafetyNone {
+        val persistentViewModelClass = (javaClass.genericSuperclass as ParameterizedType)
+            .actualTypeArguments[0] as Class<VM>
+        return@lazyThreadSafetyNone ViewModelProvider(this)[persistentViewModelClass]
     }
 
     override fun onCreateView(
