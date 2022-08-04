@@ -131,6 +131,7 @@ dependencies {
     implementation lifecycle
     implementation network
     implementation hiltt
+    implementation leakcanary
 
     kapt commonKapt
     kaptTest commonKapt
