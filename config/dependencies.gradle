@@ -57,7 +57,8 @@ ext {
             testCore             : '1.4.0',
             testExtJunit         : '1.1.3',
             testRules            : '1.4.0',
-            mockk                : '1.12.0'
+            mockk                : '1.12.0',
+            leakcanary           : '2.9.1'
     ]
 
     dependency = [
@@ -132,12 +133,12 @@ ext {
 
             commonDebug = [
                     "com.github.ChuckerTeam.Chucker:library:$version.chucker",
-                    "androidx.fragment:fragment-testing:$version.fragmentTesting"
+                    "androidx.fragment:fragment-testing:$version.fragmentTesting",
+                    "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
             ],
 
             commonRelease = [
                     "com.github.ChuckerTeam.Chucker:library-no-op:$version.chucker"
             ]
     ]
-
 }
