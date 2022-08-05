@@ -133,15 +133,12 @@ ext {
 
             commonDebug = [
                     "com.github.ChuckerTeam.Chucker:library:$version.chucker",
-                    "androidx.fragment:fragment-testing:$version.fragmentTesting"
+                    "androidx.fragment:fragment-testing:$version.fragmentTesting",
+                    "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
             ],
 
             commonRelease = [
                     "com.github.ChuckerTeam.Chucker:library-no-op:$version.chucker"
-            ],
-
-            leakcanary = [
-                    "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
             ]
     ]
 }
