@@ -9,6 +9,7 @@ apply from: "$rootDir/config/git-hooks.gradle.kts"
 apply from: "$rootDir/config/detekt.gradle"
 apply from: "$rootDir/config/ktlint.gradle"
 apply from: "$rootDir/config/spotless.gradle"
+apply from: "$rootDir/config/gradle-versions-plugin.gradle"
 
 android {
     def ext = rootProject.extensions.ext
