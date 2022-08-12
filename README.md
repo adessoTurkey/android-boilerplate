@@ -27,7 +27,7 @@ To run the application, an API key from [TMBD](https://developers.themoviedb.org
 
 `` API_KEY_TMDB = Your API Key ``
 
-How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
+How to set an environment variable in [Mac (Bash)](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Mac (Zsh)](https://linuxhint.com/set-environment-variable-zsh/) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
 
 - #### Keystore details (Release builds only)
 
@@ -105,7 +105,7 @@ If you want to know more about naming convention, code style and more please loo
 - **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata):** Lifecycle aware observable and data holder
 - **[ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel):** Holds UI data across configuration changes
 - **[Databinding](https://developer.android.com/topic/libraries/data-binding/):** Binds UI components in layouts to data sources
-- **[Dagger](https://github.com/google/dagger):** Dependency injector
+- **[Hilt](https://dagger.dev/hilt/):** Dependency injector
 - **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines):** Asynchronous programming
 - **[Glide](https://github.com/bumptech/glide):** Image loading and caching
 - **[Retrofit](https://github.com/square/retrofit):** Type safe HTTP client
