@@ -7,9 +7,4 @@
         android:drawable="@drawable/ic_movee"
         android:gravity="center" />
 
-    <item
-        android:bottom="32dp"
-        android:drawable="@drawable/background_we_love"
-        android:gravity="bottom|center"/>
-
 </layer-list>

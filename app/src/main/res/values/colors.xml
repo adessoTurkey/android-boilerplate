@@ -6,17 +6,4 @@
     <color name="colorPrimaryDark">#FAFAFA</color>
     <color name="colorAccent">#000099</color>
 
-    <!--  StyleGuide Colors  -->
-    <color name="background_movie_item">#E6E6E7</color>
-    <color name="tint_movie_item_date">#0146ff</color>
-    <color name="divider">#A3A3A3</color>
-    <color name="text_color">@color/text_primary_light</color>
-    <color name="text_primary_light">#3D4043</color>
-    <color name="background_components_light">#FFFFFF</color>
-
-    <!--  Other Colors  -->
-    <color name="soft_grey">#E5E5E5</color>
-    <color name="vibrant_blue">#003dff</color>
-    <color name="almost_black_60">#6008090a</color>
-
 </resources>

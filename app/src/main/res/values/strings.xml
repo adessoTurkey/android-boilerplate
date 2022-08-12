@@ -8,12 +8,4 @@
 
     <!-- endregion -->
 
-    <!-- region Movie Detail -->
-    <string name="movie_detail_message_not_specified">Not Specified</string>
-    <string name="movie_detail_message_min_formatted">%d min</string>
-    <string name="movie_detail_message_writers">Writers:</string>
-    <string name="movie_detail_message_stars">Stars:</string>
-
-    <!-- endregion -->
-
 </resources>

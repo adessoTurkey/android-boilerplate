@@ -9,18 +9,6 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_extra_small">4dp</dimen>
 
-    <!-- Popular Movie List -->
-    <dimen name="margin_popular_movie_text">10dp</dimen>
-    <dimen name="margin_popular_movie_release">18dp</dimen>
-    <dimen name="padding_popular_movie_drawable">5dp</dimen>
-
-    <dimen name="radius_chip">12dp</dimen>
-    <dimen name="padding_horizontal_chip">10dp</dimen>
-    <dimen name="padding_vertical_chip">4dp</dimen>
-    <dimen name="margin_movie_detail_time">10dp</dimen>
-
-    <!-- Width, Height, Sizes, Percents -->
-
     <!-- Common sizes -->
     <dimen name="radius_small">8dp</dimen>
     <dimen name="elevation_small">8dp</dimen>

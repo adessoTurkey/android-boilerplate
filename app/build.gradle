@@ -39,23 +39,23 @@ android {
     productFlavors {
         dev {
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "Movee [dev]"
+            resValue "string", "app_name", "Papara Merchant [dev]"
         }
 
         mock {
             applicationIdSuffix ".mock"
-            resValue "string", "app_name", "Movee [mock]"
+            resValue "string", "app_name", "Papara Merchant [mock]"
             buildConfigField 'Boolean', "ENABLE_MOCK", "true"
         }
 
         qa {
             applicationIdSuffix ".qa"
-            resValue "string", "app_name", "Movee [qa]"
+            resValue "string", "app_name", "Papara Merchant [qa]"
         }
 
         prd {
             resValue "string", "variant", "prod"
-            resValue "string", "app_name", "Movee"
+            resValue "string", "app_name", "Papara Merchant"
             buildConfigField "String", "BASE_URL", BASE_URL_PRD
             buildConfigField "String", "API_KEY", "\"" + ext.build.apiKey + "\""
         }

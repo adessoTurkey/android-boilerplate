@@ -14,20 +14,7 @@ There are two simple list-detail pages to show basic implementations followed.
 
 For more detailed implementation, please have a look [Android sample app][sample-app] developed with this Android boilerplate.
 
-Movie list (Light)                                  |  Movie detail (Dark)
-:-------------------------------------------------:|:-------------------------:
-<img src="/images/ss_movie-list_light.png" width="300">  |  <img src="/images/ss_movie-detail_dark.png" width="300">
-
-
 ## Prerequisites
-
-- #### API Key
-
-To run the application, an API key from [TMBD](https://developers.themoviedb.org/3/getting-started/introduction) should be supplied. WIt should be added following variable to local environment:
-
-`` API_KEY_TMDB = Your API Key ``
-
-How to set an environment variable in [Mac (Bash)](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Mac (Zsh)](https://linuxhint.com/set-environment-variable-zsh/) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
 
 - #### Keystore details (Release builds only)
 
@@ -38,7 +25,7 @@ Keystore file will be resolved at root level `build.gradle` file if the build va
 Here is a sample `keystore.properties` file:
 
 ```
-RELEASE.STORE_FILE=./movee.keystore
+RELEASE.STORE_FILE=./papara.merchant.keystore
 RELEASE.STORE_PASSWORD=password-for-store
 RELEASE.KEY_ALIAS=alias-for-key
 RELEASE.KEY_PASSWORD=password-for-key

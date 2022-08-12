@@ -6,10 +6,4 @@
     <color name="colorPrimaryDark">#000001</color>
     <color name="colorAccent">#B4BE3A</color>
 
-    <!--  Component Colors  -->
-    <color name="divider">#19eeeeef</color>
-    <color name="background_movie_item">#E6E6E7</color>
-    <color name="tint_movie_item_date">#B4BE3A</color>
-    <color name="text_color">@color/background_components_light</color>
-
 </resources>
