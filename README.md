@@ -105,7 +105,7 @@ If you want to know more about naming convention, code style and more please loo
 - **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata):** Lifecycle aware observable and data holder
 - **[ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel):** Holds UI data across configuration changes
 - **[Databinding](https://developer.android.com/topic/libraries/data-binding/):** Binds UI components in layouts to data sources
-- **[Dagger](https://github.com/google/dagger):** Dependency injector
+- **[Hilt](https://dagger.dev/hilt/):** Dependency injector
 - **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines):** Asynchronous programming
 - **[Glide](https://github.com/bumptech/glide):** Image loading and caching
 - **[Retrofit](https://github.com/square/retrofit):** Type safe HTTP client
