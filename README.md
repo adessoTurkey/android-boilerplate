@@ -27,7 +27,7 @@ To run the application, an API key from [TMBD](https://developers.themoviedb.org
 
 `` API_KEY_TMDB = Your API Key ``
 
-How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
+How to set an environment variable in [Mac (Bash)](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Mac (Zsh)](https://linuxhint.com/set-environment-variable-zsh/) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
 
 - #### Keystore details (Release builds only)
 
