@@ -13,7 +13,7 @@ apply from: "$rootDir/config/gradle-versions-plugin.gradle"
 
 android {
     def ext = rootProject.extensions.ext
-    compileSdk 31
+    compileSdk ext.android.compileSdk
 
     defaultConfig {
         minSdkVersion ext.android.minSdk

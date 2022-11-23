@@ -2,6 +2,7 @@ package com.adesso.movee.domain
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adesso.movee.data.repository.MovieRepository
+import com.adesso.movee.internal.util.api.State
 import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
 import com.adesso.movee.scene.movielist.model.MovieGenreItemUiModel
 import io.mockk.MockKAnnotations
@@ -65,12 +66,13 @@ class FetchMovieDetailFlowUseCaseTest {
 
         // given
         coEvery { repo.fetchMovieDetailFlow(any()) } coAnswers {
-            flow { emit(mockMovieDetailSuccessUIModel) }
+            flow { emit(State.Success(mockMovieDetailSuccessUIModel)) }
         }
 
         // then
         useCase.execute(FetchMovieDetailFlowUseCase.Params(movieId)).collect {
-            assertEquals(it, mockMovieDetailSuccessUIModel)
+            assertEquals(it is State.Success, true)
+            assertEquals((it as State.Success).data, mockMovieDetailSuccessUIModel)
         }
     }
 }

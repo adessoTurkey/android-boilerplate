@@ -22,7 +22,7 @@ open class BaseRemoteDataSource {
     private fun asFailure(exception: Exception): Failure {
         return when (exception) {
             is Failure -> exception
-            else -> Failure.UnknownError(exception)
+            else -> Failure.UnknownError(exception.message ?: "Unknown error")
         }
     }
 }

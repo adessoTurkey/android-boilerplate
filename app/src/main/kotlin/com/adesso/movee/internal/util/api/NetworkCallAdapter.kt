@@ -1,6 +1,9 @@
 package com.adesso.movee.internal.util.api
 
 import com.adesso.movee.internal.util.Failure
+import java.io.IOException
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -11,9 +14,6 @@ import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
 import timber.log.Timber
-import java.io.IOException
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
 
 class NetworkCallAdapter : CallAdapter.Factory() {
 
@@ -79,7 +79,6 @@ private class ResultCall<R> constructor(
                     @Suppress("UNCHECKED_CAST")
                     State.Success(Unit) as State.Success<R>
                 } else {
-                    @Suppress("UNCHECKED_CAST")
                     State.Fail(Failure.EmptyResponse)
                 }
             }
@@ -87,7 +86,7 @@ private class ResultCall<R> constructor(
             override fun onFailure(call: Call<R>, throwable: Throwable) {
                 val error = when (throwable) {
                     is IOException -> State.Fail(Failure.NetworkError(throwable.message ?: ""))
-                    else -> State.Fail<R>(Failure.UnknownError(Exception(throwable)))
+                    else -> State.Fail<R>(Failure.UnknownError(throwable.message ?: ""))
                 }
                 Timber.e(throwable)
                 callback.onResponse(this@ResultCall, Response.success(error))

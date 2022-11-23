@@ -5,6 +5,7 @@ import com.adesso.movee.data.remote.api.MovieService
 import com.adesso.movee.data.remote.model.movie.MovieDetailResponseModel
 import com.adesso.movee.data.remote.model.movie.MovieGenreItemResponseModel
 import com.adesso.movee.internal.util.Failure
+import com.adesso.movee.internal.util.api.State
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -67,17 +68,18 @@ class MovieRemoteDataSourceTest {
     }
 
     @Test
-    fun `when fetch movie detail called should return detail response model`() = runBlocking {
+    fun `when fetch movie detail called successfully, it should return detail response model`() = runBlocking {
         val movieId = 100L
 
         // given
         coEvery { service.fetchMovieDetail(movieId) } coAnswers {
-            mockMovieDetailResponseModel
+            State.Success(mockMovieDetailResponseModel)
         }
 
         // then
-        remoteDataSource.fetchMovieDetailFlow(movieId).collect {
-            assertEquals(it, mockMovieDetailResponseModel)
+        remoteDataSource.fetchMovieDetailFlow(movieId).collect { state ->
+            assertTrue(state is State.Success)
+            assertEquals(mockMovieDetailResponseModel, (state as State.Success).data)
         }
     }
 

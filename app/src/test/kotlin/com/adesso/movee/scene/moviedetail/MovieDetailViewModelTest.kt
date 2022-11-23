@@ -3,26 +3,19 @@ package com.adesso.movee.scene.moviedetail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adesso.movee.domain.FetchMovieDetailFlowUseCase
 import com.adesso.movee.internal.popup.PopupModel
-import com.adesso.movee.internal.util.Event
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
 import com.adesso.movee.scene.movielist.model.MovieGenreItemUiModel
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class MovieDetailViewModelTest {
@@ -67,41 +60,4 @@ class MovieDetailViewModelTest {
         testDispatcher.cleanupTestCoroutines()
     }
 
-    @Test
-    fun `when fetch movie detail called should return movie detail ui model with kotlin flow`() =
-        runBlocking {
-            val movieId = 100L
-
-            // given
-            coEvery { useCase.execute(any()) } coAnswers {
-                flow { emit(mockMovieDetailSuccessUIModel) }
-            }
-
-            // when
-            viewModel.fetchMovieDetail(movieId)
-
-            // then
-            assertEquals(viewModel.movieDetail.value, mockMovieDetailSuccessUIModel)
-        }
-
-    @Test
-    fun `when fetch movie detail called with wrong id should throw failure with kotlin flow`() =
-        runBlocking {
-            val movieId = -1L
-
-            // given
-            coEvery { useCase.execute(any()) } coAnswers {
-                flow { throw mockMovieDetailFailureModel }
-            }
-
-            // when
-            viewModel.fetchMovieDetail(movieId)
-
-            // then
-            assertNull(viewModel.movieDetail.value)
-            assertEquals(
-                viewModel.failurePopup.value?.peekContent()?.message,
-                Event(exceptedFailurePopupModel).peekContent().message
-            )
-        }
 }

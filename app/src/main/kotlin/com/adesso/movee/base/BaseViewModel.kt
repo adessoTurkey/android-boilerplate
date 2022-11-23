@@ -36,8 +36,9 @@ abstract class BaseViewModel : ViewModel() {
                 failure.message
 
             is Failure.UnknownError ->
-                failure.exception.localizedMessage
-                    ?: getString(R.string.common_error_unknown)
+                failure.message.ifEmpty {
+                    getString(R.string.common_error_unknown)
+                }
 
             is Failure.TimeOutError ->
                 getString(R.string.common_error_timeout)
