@@ -1,9 +1,11 @@
 package com.adesso.movee.scene.moviedetail
 
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseFragment
 import com.adesso.movee.databinding.FragmentMovieDetailBinding
+import com.adesso.movee.internal.extension.collectFlow
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +17,16 @@ class MovieDetailFragment :
     override val layoutId = R.layout.fragment_movie_detail
 
     override fun initialize() {
-        viewModel.fetchMovieDetail(args.id)
+        initReceivers()
+    }
+
+    private fun initReceivers() {
+        collectFlow(
+            flow = viewModel.fetchMovieDetail(args.id),
+            minActiveState = Lifecycle.State.STARTED
+        ) {
+            binder.textViewOverview.text = it?.overview
+            binder.layoutMovieDetail.movieDetail = it
+        }
     }
 }

@@ -40,18 +40,16 @@ class NetworkModuleTest {
         val loggingInterceptor = mockk<HttpLoggingInterceptor>()
         val curlInterceptor = mockk<CurlInterceptor>()
         val chuckerInterceptor = mockk<ChuckerInterceptor>()
-        val moshi = mockk<Moshi>()
 
         val client = networkModule.provideOkHttpClient(
             loggingInterceptor,
             curlInterceptor,
             chuckerInterceptor,
-            moshi
         )
 
         with(client.interceptors) {
-            assertEquals(6, size)
             assertTrue(contains(loggingInterceptor))
+            assertTrue(contains(curlInterceptor))
             assertTrue(contains(chuckerInterceptor))
         }
     }

@@ -5,6 +5,7 @@ import com.adesso.movee.data.remote.api.MovieService
 import com.adesso.movee.data.remote.model.movie.MovieDetailResponseModel
 import com.adesso.movee.data.remote.model.movie.MovieGenreItemResponseModel
 import com.adesso.movee.internal.util.Failure
+import com.adesso.movee.internal.util.api.State
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -41,7 +42,7 @@ class MovieRemoteDataSourceTest {
 
     private val apiErrorMessage = "Undefined Movie ID"
     private val mockMovieDetailFailureModel =
-        Failure.ApiError(code = 201, message = apiErrorMessage)
+        Failure.NetworkError(message = apiErrorMessage)
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -67,17 +68,18 @@ class MovieRemoteDataSourceTest {
     }
 
     @Test
-    fun `when fetch movie detail called should return detail response model`() = runBlocking {
+    fun `when fetch movie detail called successfully, it should return detail response model`() = runBlocking {
         val movieId = 100L
 
         // given
         coEvery { service.fetchMovieDetail(movieId) } coAnswers {
-            mockMovieDetailResponseModel
+            State.Success(mockMovieDetailResponseModel)
         }
 
         // then
-        remoteDataSource.fetchMovieDetailFlow(movieId).collect {
-            assertEquals(it, mockMovieDetailResponseModel)
+        remoteDataSource.fetchMovieDetailFlow(movieId).collect { state ->
+            assertTrue(state is State.Success)
+            assertEquals(mockMovieDetailResponseModel, (state as State.Success).data)
         }
     }
 
@@ -87,16 +89,15 @@ class MovieRemoteDataSourceTest {
 
         // given
         coEvery { service.fetchMovieDetail(movieId) } coAnswers {
-            throw Failure.ApiError(201, apiErrorMessage)
+            throw Failure.NetworkError(apiErrorMessage)
         }
 
         // then
         remoteDataSource.fetchMovieDetailFlow(movieId).catch {
-            assertTrue(it is Failure.ApiError)
+            assertTrue(it is Failure.NetworkError)
 
-            val failure = it as? Failure.ApiError
+            val failure = it as? Failure.NetworkError
 
-            assertEquals(failure?.code, mockMovieDetailFailureModel.code)
             assertEquals(failure?.message, mockMovieDetailFailureModel.message)
         }.collect()
     }

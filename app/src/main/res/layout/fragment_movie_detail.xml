@@ -19,8 +19,8 @@
         app:layoutDescription="@xml/scene_movie_detail">
 
         <include
-            layout="@layout/layout_movie_detail"
-            app:movieDetail="@{viewModel.movieDetail}" />
+            android:id="@+id/layout_movie_detail"
+            layout="@layout/layout_movie_detail" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollable_content"
@@ -40,7 +40,6 @@
                 style="@style/TextField.MovieDetail.Overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.movieDetail.overview}"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/lorem" />
 

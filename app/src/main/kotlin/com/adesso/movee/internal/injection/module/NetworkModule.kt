@@ -3,9 +3,8 @@ package com.adesso.movee.internal.injection.module
 import android.content.Context
 import com.adesso.movee.BuildConfig
 import com.adesso.movee.data.remote.api.MovieService
-import com.adesso.movee.internal.util.NetworkStateHolder
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
-import com.adesso.movee.internal.util.api.ErrorHandlingInterceptor
+import com.adesso.movee.internal.util.api.NetworkCallAdapter
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -61,8 +60,7 @@ internal class NetworkModule {
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         curlInterceptor: CurlInterceptor,
-        chuckerInterceptor: ChuckerInterceptor,
-        moshi: Moshi
+        chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
             .connectTimeout(CLIENT_TIME_OUT_SEC, TimeUnit.SECONDS)
@@ -71,7 +69,6 @@ internal class NetworkModule {
             .addInterceptor(chuckerInterceptor)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(curlInterceptor)
-            .addInterceptor(ErrorHandlingInterceptor(NetworkStateHolder, moshi))
             .addInterceptor(RetryAfterInterceptor())
 
         return httpClient.build()
@@ -82,6 +79,7 @@ internal class NetworkModule {
     fun provideRetrofit(client: Lazy<OkHttpClient>, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
+            .addCallAdapterFactory(NetworkCallAdapter())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .callFactory { client.get().newCall(it) }
             .build()

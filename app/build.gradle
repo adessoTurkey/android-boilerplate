@@ -13,15 +13,15 @@ apply from: "$rootDir/config/gradle-versions-plugin.gradle"
 
 android {
     def ext = rootProject.extensions.ext
-    compileSdkVersion ext.android.compileSdk
+    compileSdk ext.android.compileSdk
 
     defaultConfig {
         minSdkVersion ext.android.minSdk
         targetSdkVersion ext.android.targetSdk
-        versionCode ext.application.versionCode
-        versionName ext.application.versionName
-        applicationId ext.application.id
-        testInstrumentationRunner ext.application.testInstrumentationRunner
+        versionCode application.versionCode
+        versionName application.versionName
+        applicationId application.id
+        testInstrumentationRunner application.testInstrumentationRunner
         vectorDrawables.useSupportLibrary true
 
         buildConfigField "String", "BASE_URL", BASE_URL_DEV
