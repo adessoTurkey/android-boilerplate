@@ -9,6 +9,7 @@ import com.adesso.movee.internal.util.api.RetryAfterInterceptor
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.moczul.ok2curl.CurlInterceptor
+import com.moczul.ok2curl.logger.Logger
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
@@ -46,7 +47,11 @@ internal class NetworkModule {
     @Provides
     @Singleton
     internal fun provideCurlInterceptor(): CurlInterceptor {
-        return CurlInterceptor { message -> if (BuildConfig.ENABLE_LOG) println(message) }
+        return CurlInterceptor(object : Logger {
+            override fun log(message: String) {
+                if (BuildConfig.ENABLE_LOG) println(message)
+            }
+        })
     }
 
     @Provides
