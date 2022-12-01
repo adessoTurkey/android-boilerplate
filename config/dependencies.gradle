@@ -58,7 +58,8 @@ ext {
             testExtJunit       : '1.1.3',
             testRules          : '1.4.0',
             mockk              : '1.12.0',
-            leakcanary         : '2.9.1'
+            leakcanary         : '2.9.1',
+            desugar            : '1.1.5'
     ]
 
     dependency = [
@@ -139,6 +140,10 @@ ext {
 
             commonRelease = [
                     "com.github.ChuckerTeam.Chucker:library-no-op:$version.chucker"
+            ],
+
+            desugar = [
+                    "com.android.tools:desugar_jdk_libs:$version.desugar",
             ]
     ]
 }

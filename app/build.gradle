@@ -132,6 +132,7 @@ dependencies {
     implementation lifecycle
     implementation network
     implementation hiltt
+    coreLibraryDesugaring desugar
 
     kapt commonKapt
     kaptTest commonKapt
