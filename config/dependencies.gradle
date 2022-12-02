@@ -2,13 +2,13 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_11,
-            kotlin: '1.6.10'
+            kotlin: '1.7.22'
     ]
 
     android = [
             minSdk    : 21,
-            targetSdk : 31,
-            compileSdk: 31
+            targetSdk : 33,
+            compileSdk: 33
     ]
 
     build = [
@@ -23,43 +23,43 @@ ext {
     ]
 
     version = [
-            gradle             : '7.1.2',
-            hilt               : '2.41',
-            retrofit           : '2.9.0',
-            okhttp             : '4.9.1',
-            moshi              : '1.12.0',
-            moshiLazyAdapter   : '2.2',
-            constraintLayout   : '2.0.4',
-            navigation         : '2.3.5',
-            lifecycle          : '2.4.0',
-            lifecycleExtensions: '2.2.0',
-            androidKtx         : '1.7.0',
-            coroutines         : '1.5.2',
-            chucker            : '3.5.0',
-            glide              : '4.12.0',
-            ok2curl            : '0.7.0',
-            material           : '1.4.0',
-            preference         : '1.1.1',
-            viewPager2         : '1.0.0',
-            timber             : '5.0.1',
-            spotless           : '6.1.0',
-            detekt             : '1.22.0',
-            benManesVersion    : '0.42.0',
-            jacoco             : '0.8.7',
-            junitJacocoPlugin  : '0.16.0',
-            ktlint             : '0.44.0',
-            jltschKtlintPlugin : '10.2.1',
-            jUnit              : '4.13.2',
-            espresso           : '3.4.0',
-            robolectric        : '4.6.1',
-            arcCoreTesting     : '2.1.0',
-            fragmentTesting    : '1.4.0',
-            testCore           : '1.4.0',
-            testExtJunit       : '1.1.3',
-            testRules          : '1.4.0',
-            mockk              : '1.12.0',
-            leakcanary         : '2.9.1',
-            desugar            : '1.1.5'
+            gradle               : '7.3.1',
+            hilt                 : '2.44.2',
+            retrofit             : '2.9.0',
+            okhttp               : '4.10.0',
+            moshi                : '1.14.0',
+            moshiLazyAdapter     : '2.2',
+            constraintLayout     : '2.1.4',
+            navigation           : '2.5.3',
+            lifecycle            : '2.5.1',
+            lifecycleExtensions  : '2.2.0',
+            androidKtx           : '1.9.0',
+            coroutines           : '1.6.4',
+            chucker              : '3.5.2',
+            glide                : '4.14.2',
+            ok2curl              : '0.8.0',
+            material             : '1.5.4',
+            preference           : '1.2.0',
+            viewPager2           : '1.0.0',
+            timber               : '5.0.1',
+            spotless             : '6.1.0',
+            detekt               : '1.22.0',
+            benManesVersion      : '0.44.0',
+            jacoco               : '0.8.8',
+            junitJacocoPlugin    : '0.16.0',
+            ktlint               : '0.45.2',
+            jltschKtlintPlugin   : '11.0.0',
+            jUnit                : '4.13.2',
+            espresso             : '3.5.0',
+            robolectric          : '4.9',
+            arcCoreTesting       : '2.1.0',
+            fragmentTesting      : '1.5.4',
+            testCore             : '1.5.0',
+            testExtJunit         : '1.1.4',
+            testRules            : '1.5.0',
+            mockk                : '1.13.2',
+            leakcanary           : '2.10',
+            desugar              : '1.1.5'
     ]
 
     dependency = [
