@@ -13,7 +13,7 @@ class DateAdapter {
     @FromJson
     fun fromJson(date: String): LocalDate? {
         return try {
-            LocalDate.parse(date, dateFormat)
+            LocalDate.parse(date)
         } catch (e: ParseException) {
             null
         }

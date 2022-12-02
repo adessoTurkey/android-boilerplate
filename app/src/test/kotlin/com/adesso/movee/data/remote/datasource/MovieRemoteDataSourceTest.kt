@@ -23,8 +23,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.LocalDate
 
 @ExperimentalCoroutinesApi
 class MovieRemoteDataSourceTest {
@@ -38,7 +37,7 @@ class MovieRemoteDataSourceTest {
         posterPath = "https...",
         popularity = 21.0,
         average = 9.0,
-        releaseDate = LocalDateTime.ofEpochSecond(100020L, 0, ZoneOffset.UTC).toLocalDate()
+        releaseDate = LocalDate.now()
     )
 
     private val apiErrorMessage = "Undefined Movie ID"
