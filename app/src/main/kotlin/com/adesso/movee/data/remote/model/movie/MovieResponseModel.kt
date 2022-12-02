@@ -3,7 +3,7 @@ package com.adesso.movee.data.remote.model.movie
 import com.adesso.movee.data.remote.BaseResponseModel
 import com.adesso.movee.internal.util.Image
 import com.squareup.moshi.Json
-import java.util.Date
+import java.time.LocalDate
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -19,5 +19,5 @@ data class MovieResponseModel(
     @Json(name = "popularity") val popularity: Double,
     @Json(name = "vote_average") val average: Double,
     @Json(name = "adult") val isAdult: Boolean,
-    @Json(name = "release_date") val releaseDate: Date?
+    @Json(name = "release_date") val releaseDate: LocalDate?
 ) : BaseResponseModel()

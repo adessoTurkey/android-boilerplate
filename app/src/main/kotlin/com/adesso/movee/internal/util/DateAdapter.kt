@@ -3,24 +3,24 @@ package com.adesso.movee.internal.util
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class DateAdapter {
-    private val dateFormat = SimpleDateFormat(DATE_FORMAT_SERVER, Locale.ENGLISH)
+    private val dateFormat = DateTimeFormatter.ofPattern(DATE_FORMAT_SERVER, Locale.ENGLISH)
 
     @FromJson
-    fun fromJson(date: String): Date? {
+    fun fromJson(date: String): LocalDate? {
         return try {
-            dateFormat.parse(date)
+            LocalDate.parse(date)
         } catch (e: ParseException) {
             null
         }
     }
 
     @ToJson
-    fun toJson(date: Date): String {
+    fun toJson(date: LocalDate): String {
         return dateFormat.format(date)
     }
 
