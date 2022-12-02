@@ -3,7 +3,7 @@ package com.adesso.movee.scene.movielist.model
 import android.os.Parcelable
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.formatDate
-import java.util.Date
+import java.time.LocalDate
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,7 +13,7 @@ data class MovieUiModel(
     val overview: String,
     val posterPath: String?,
     val average: Double,
-    val releaseDate: Date?,
+    val releaseDate: LocalDate?,
     val backdropPath: String?,
     val popularity: Double,
     val isAdult: Boolean

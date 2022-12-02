@@ -5,6 +5,7 @@
     <issue id="ObsoleteLintCustomCheck" severity="ignore"/>
     <issue id="UnknownNullness" severity="ignore"/>
     <issue id="WrongConstant" severity="ignore"/>
+    <issue id="NewApi" severity="ignore"/>
     <issue id="InvalidPackage" severity="ignore">
         <ignore path="**/**.jar"/>
     </issue>
