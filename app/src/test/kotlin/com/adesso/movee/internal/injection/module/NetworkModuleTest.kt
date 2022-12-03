@@ -2,6 +2,7 @@ package com.adesso.movee.internal.injection.module
 
 import com.adesso.movee.BuildConfig
 import com.adesso.movee.data.remote.api.MovieService
+import com.adesso.movee.internal.util.api.NetworkConnectivityInterceptor
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.moczul.ok2curl.CurlInterceptor
 import com.squareup.moshi.Moshi
@@ -40,17 +41,20 @@ class NetworkModuleTest {
         val loggingInterceptor = mockk<HttpLoggingInterceptor>()
         val curlInterceptor = mockk<CurlInterceptor>()
         val chuckerInterceptor = mockk<ChuckerInterceptor>()
+        val networkConnectivityInterceptor = mockk<NetworkConnectivityInterceptor>()
 
         val client = networkModule.provideOkHttpClient(
             loggingInterceptor,
             curlInterceptor,
             chuckerInterceptor,
+            networkConnectivityInterceptor
         )
 
         with(client.interceptors) {
             assertTrue(contains(loggingInterceptor))
             assertTrue(contains(curlInterceptor))
             assertTrue(contains(chuckerInterceptor))
+            assertTrue(contains(networkConnectivityInterceptor))
         }
     }
 
