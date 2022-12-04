@@ -16,7 +16,9 @@
 
 package com.adesso.movee.internal.util
 
-import com.adesso.movee.internal.util.functional.Either
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -24,11 +26,11 @@ abstract class UseCase<out Type : Any, in Params> {
 
     protected abstract suspend fun buildUseCase(params: Params): Type
 
-    suspend fun run(params: Params): Either<Failure, Type> = withContext(Dispatchers.IO) {
+    suspend fun run(params: Params): Result<Type, Failure> = withContext(Dispatchers.IO) {
         try {
-            Either.Right(buildUseCase(params))
+            Ok(buildUseCase(params))
         } catch (failure: Failure) {
-            Either.Left(failure)
+            Err(failure)
         }
     }
 
