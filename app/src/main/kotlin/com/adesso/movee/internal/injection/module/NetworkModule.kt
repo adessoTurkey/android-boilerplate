@@ -3,8 +3,11 @@ package com.adesso.movee.internal.injection.module
 import android.content.Context
 import com.adesso.movee.BuildConfig
 import com.adesso.movee.data.remote.api.MovieService
+import com.adesso.movee.internal.util.NetworkConnectivityListener
+import com.adesso.movee.internal.util.NetworkConnectivityListenerImpl
 import com.adesso.movee.internal.util.api.ApiKeyInterceptor
 import com.adesso.movee.internal.util.api.NetworkCallAdapter
+import com.adesso.movee.internal.util.api.NetworkConnectivityInterceptor
 import com.adesso.movee.internal.util.api.RetryAfterInterceptor
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -19,6 +22,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -62,10 +66,23 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideNetworkConnectivityListener(@ApplicationContext context: Context): NetworkConnectivityListener {
+        return NetworkConnectivityListenerImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkConnectivityInterceptor(networkConnectivityListener: NetworkConnectivityListener): Interceptor {
+        return NetworkConnectivityInterceptor(networkConnectivityListener)
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         curlInterceptor: CurlInterceptor,
-        chuckerInterceptor: ChuckerInterceptor
+        chuckerInterceptor: ChuckerInterceptor,
+        networkConnectivityInterceptor: NetworkConnectivityInterceptor
     ): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
             .connectTimeout(CLIENT_TIME_OUT_SEC, TimeUnit.SECONDS)
@@ -75,13 +92,17 @@ internal class NetworkModule {
             .addInterceptor(loggingInterceptor)
             .addInterceptor(curlInterceptor)
             .addInterceptor(RetryAfterInterceptor())
+            .addInterceptor(networkConnectivityInterceptor)
 
         return httpClient.build()
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: Lazy<OkHttpClient>, moshi: Moshi): Retrofit {
+    fun provideRetrofit(
+        client: Lazy<OkHttpClient>,
+        moshi: Moshi
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addCallAdapterFactory(NetworkCallAdapter())
