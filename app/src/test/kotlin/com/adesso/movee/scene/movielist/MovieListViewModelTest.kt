@@ -5,9 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.internal.util.Failure
-import com.adesso.movee.internal.util.functional.Either
 import com.adesso.movee.scene.movielist.model.MovieUiModel
-import com.adesso.movee.testutil.extansion.getOrAwaitValue
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -42,7 +42,7 @@ class MovieListViewModelTest {
 
         coEvery {
             fetchNowPlayingMoviesUseCase.run(any())
-        } returns Either.Right(mockMovieUiModelList)
+        } returns Ok(mockMovieUiModelList)
 
         viewModel = MovieListViewModel(
             fetchNowPlayingMoviesUseCase = fetchNowPlayingMoviesUseCase
@@ -50,12 +50,15 @@ class MovieListViewModelTest {
     }
 
     @Test
-    fun `verify fetching now playing movies when fetchNowPlayingMovies returns successfully`() = runBlocking {
-        coVerify {
-            fetchNowPlayingMoviesUseCase.run(any())
-        }
+    fun `verify fetching now playing movies when fetchNowPlayingMovies returns successfully`() {
+        runBlocking {
 
-        Assert.assertEquals(viewModel.nowPlayingMovies.getOrAwaitValue(), mockMovieUiModelList)
+            coVerify(exactly = 1) { // usecase run on init block
+                fetchNowPlayingMoviesUseCase.run(any())
+            }
+
+            Assert.assertEquals(mockMovieUiModelList, viewModel.nowPlayingMovies.value)
+        }
     }
 
     @Test
@@ -66,7 +69,7 @@ class MovieListViewModelTest {
 
         coEvery {
             fetchNowPlayingMoviesUseCase.run(any())
-        } returns Either.Left(mockFailure)
+        } returns Err(mockFailure)
 
         Assert.assertNull(viewModel.failurePopup.value)
 

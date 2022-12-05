@@ -3,6 +3,9 @@ package com.adesso.movee.domain
 import com.adesso.movee.data.repository.MovieRepository
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.movielist.model.MovieUiModel
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.getError
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
@@ -10,7 +13,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
@@ -33,17 +36,15 @@ class FetchNowPlayingMoviesUseCaseTest {
             repository.fetchNowPlayingMovies()
         } returns mockedResponse
 
-        val result =
+        val result: Result<List<MovieUiModel>, Failure> =
             runBlocking {
                 fetchNowPlayingMoviesUseCase.run(
                     mockk(relaxed = true)
                 )
             }
 
-        assertTrue(result.isRight)
-        result.ifRight {
-            assertEquals(mockedResponse, it)
-        }
+        assertNotNull(result.get())
+        assertEquals(mockedResponse, result.get())
     }
 
     @Test
@@ -61,9 +62,7 @@ class FetchNowPlayingMoviesUseCaseTest {
                 )
             }
 
-        assertTrue(result.isLeft)
-        result.ifLeft {
-            assertEquals(errorResponse, it)
-        }
+        assertNotNull(result.getError())
+        assertEquals(errorResponse, result.getError())
     }
 }
