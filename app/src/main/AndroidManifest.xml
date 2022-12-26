@@ -4,7 +4,7 @@
     package="com.adesso.movee">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.MainApplication"
@@ -15,29 +15,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name=".scene.splash.SplashActivity"
+            android:name=".scene.showcase.ShowCaseActivity"
+            android:exported="true"
             android:noHistory="true"
             android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.Splash"
-            android:exported="true">
-
+            android:label="@string/title_activity_show_case"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
 
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
-
+        <activity
+            android:name=".scene.splash.SplashActivity"
+            android:exported="true"
+            android:noHistory="true"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.Splash">
+        </activity>
         <activity
             android:name=".scene.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

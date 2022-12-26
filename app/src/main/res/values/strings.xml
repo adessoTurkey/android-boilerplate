@@ -9,10 +9,17 @@
     <!-- endregion -->
 
     <!-- region Movie Detail -->
+
     <string name="movie_detail_message_not_specified">Not Specified</string>
     <string name="movie_detail_message_min_formatted">%d min</string>
     <string name="movie_detail_message_writers">Writers:</string>
     <string name="movie_detail_message_stars">Stars:</string>
+
+    <!-- endregion -->
+
+    <!-- region Compose Show Case -->
+
+    <string name="title_activity_show_case">Show Case</string>
 
     <!-- endregion -->
 
