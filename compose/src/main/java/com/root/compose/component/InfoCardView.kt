@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
 
 @Composable
-fun InfoCard(
+fun InfoCardView(
     titleText: String,
     titleFontSize: TextUnit = 16.sp,
     titleColor: Color = Color.DarkGray,

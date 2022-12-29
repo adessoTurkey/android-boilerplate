@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun InfoCardSmall(
+fun InfoCardViewSmall(
     titleText: String,
     titleFontSize: TextUnit = 16.sp,
     titleColor: Color = Color.DarkGray,
