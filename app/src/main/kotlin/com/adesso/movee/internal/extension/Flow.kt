@@ -4,28 +4,35 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
-import com.adesso.movee.internal.util.Failure
-import com.adesso.movee.internal.util.api.State
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 
-fun <In, Out> Flow<State<In>>.mapSuccess(call: (In) -> Out): Flow<State<Out>> =
+fun <OkTypeIn, ErrType, OkTypeOut> Flow<Result<OkTypeIn, ErrType>>.mapSuccess(
+    call: (OkTypeIn) -> OkTypeOut
+): Flow<Result<OkTypeOut, ErrType>> =
     this.map {
-        it.transformSuccess(call)
+        when (it) {
+            is Ok -> Ok(call.invoke(it.value))
+            is Err -> it
+        }
     }
 
-fun <In> Flow<State<In>>.doOnFailed(onFailed: (Failure) -> Unit): Flow<In> =
+fun <OkType, ErrType> Flow<Result<OkType, ErrType>>.doOnFailed(
+    onFailed: (ErrType) -> Unit
+): Flow<Result<OkType, ErrType>> =
     this.mapNotNull {
         when (it) {
-            is State.Fail -> {
-                onFailed.invoke(it.failure)
+            is Ok -> it
+            is Err -> {
+                onFailed.invoke(it.error)
                 null
             }
-
-            is State.Success -> it.data
         }
     }
 

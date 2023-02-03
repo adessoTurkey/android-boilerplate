@@ -2,13 +2,13 @@ package com.adesso.movee.data.repository
 
 import com.adesso.movee.data.remote.datasource.MovieRemoteDataSource
 import com.adesso.movee.data.repository.mapper.MovieMapper
-import com.adesso.movee.internal.extension.mapSuccess
-import com.adesso.movee.internal.util.api.State
+import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.moviedetail.model.MovieDetailUiModel
 import com.adesso.movee.scene.movielist.model.MovieUiModel
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class MovieRepository @Inject constructor(
@@ -16,15 +16,13 @@ class MovieRepository @Inject constructor(
     private val mapper: MovieMapper
 ) {
 
-    suspend fun fetchNowPlayingMovies(): List<MovieUiModel> {
-        val moviesResponse = remoteDataSource.fetchNowPlayingMovies()
-
-        return moviesResponse.movieList.map { mapper.toUiModel(it) }
+    suspend fun fetchNowPlayingMovies(): Result<List<MovieUiModel>, Failure> {
+        return remoteDataSource.fetchNowPlayingMovies()
+            .map { responseModel -> responseModel.movieList.map { movie -> mapper.mapMovie(movie) } }
     }
 
-    suspend fun fetchMovieDetailFlow(id: Long): Flow<State<MovieDetailUiModel>> {
-        return remoteDataSource.fetchMovieDetailFlow(id).mapSuccess {
-            mapper.toUiModel(it)
-        }
+    suspend fun fetchMovieDetail(id: Long): Result<MovieDetailUiModel, Failure> {
+        return remoteDataSource.fetchMovieDetail(id)
+            .map { mapper.mapMovieDetail(it) }
     }
 }

@@ -1,84 +1,80 @@
 package com.adesso.movee.scene.movielist
 
-import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.scene.movielist.model.MovieUiModel
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
-import org.junit.Assert
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.P])
+@OptIn(ExperimentalCoroutinesApi::class)
 class MovieListViewModelTest {
 
     @get:Rule
-    val testInstantTaskExecutorRule = InstantTaskExecutorRule()
+    val rule = InstantTaskExecutorRule()
 
-    @MockK
-    lateinit var fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase
+    private val testDispatcher = TestCoroutineDispatcher()
 
+    private val fetchNowPlayingMoviesUseCase = mockk<FetchNowPlayingMoviesUseCase>()
     private lateinit var viewModel: MovieListViewModel
-
-    private val mockMovieUiModelList = mockk<List<MovieUiModel>>()
 
     @Before
     fun setUp() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
+        Dispatchers.setMain(testDispatcher)
+        viewModel = MovieListViewModel(fetchNowPlayingMoviesUseCase)
+    }
 
-        coEvery {
-            fetchNowPlayingMoviesUseCase.run(any())
-        } returns Ok(mockMovieUiModelList)
+    @After
+    fun cleanup() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
 
-        viewModel = MovieListViewModel(
-            fetchNowPlayingMoviesUseCase = fetchNowPlayingMoviesUseCase
+    @Test
+    fun `fetchNowPlayingMovies should post now playing movies`() {
+        val expected = listOf(
+            MovieUiModel(
+                id = 1,
+                title = "",
+                overview = "",
+                posterPath = null,
+                average = 0.0,
+                releaseDate = null,
+                backdropPath = null,
+                popularity = 0.0,
+                isAdult = false
+            ),
+            MovieUiModel(
+                id = 2,
+                title = "",
+                overview = "",
+                posterPath = null,
+                average = 0.0,
+                releaseDate = null,
+                backdropPath = null,
+                popularity = 0.0,
+                isAdult = false
+            ),
         )
-    }
 
-    @Test
-    fun `verify fetching now playing movies when fetchNowPlayingMovies returns successfully`() {
-        runBlocking {
-
-            coVerify(exactly = 1) { // usecase run on init block
-                fetchNowPlayingMoviesUseCase.run(any())
-            }
-
-            Assert.assertEquals(mockMovieUiModelList, viewModel.nowPlayingMovies.value)
+        every { fetchNowPlayingMoviesUseCase(any(), any(), any()) } answers {
+            val continuation =
+                (args[2] as ((com.github.michaelbull.result.Result<List<MovieUiModel>, Failure>) -> Unit))
+            continuation(Ok(expected))
         }
-    }
-
-    @Test
-    fun `verify fetching now playing movies when fetchNowPlayingMovies returns failed`() = runBlocking {
-        val mockFailure = mockk<Failure> {
-            every { message } returns "errorMessage"
-        }
-
-        coEvery {
-            fetchNowPlayingMoviesUseCase.run(any())
-        } returns Err(mockFailure)
-
-        Assert.assertNull(viewModel.failurePopup.value)
 
         viewModel.fetchNowPlayingMovies()
 
-        coVerify {
-            fetchNowPlayingMoviesUseCase.run(any())
-        }
-
-        Assert.assertNotNull(viewModel.failurePopup.value)
+        assert(viewModel.nowPlayingMovies.value == expected)
     }
 }

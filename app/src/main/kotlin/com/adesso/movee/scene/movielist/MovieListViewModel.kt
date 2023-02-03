@@ -28,10 +28,10 @@ class MovieListViewModel @Inject constructor(
     }
 
     internal fun fetchNowPlayingMovies() = viewModelScope.launch {
-        fetchNowPlayingMoviesUseCase
-            .run(UseCase.None)
-            .onSuccess { postNowPlayingMovies(it) }
-            .onFailure { handleFailure(it) }
+        fetchNowPlayingMoviesUseCase(UseCase.None) { result ->
+            result.onSuccess { movieUiModels -> postNowPlayingMovies(movieUiModels) }
+                .onFailure { failure -> handleFailure(failure) }
+        }
     }
 
     private fun postNowPlayingMovies(movies: List<MovieUiModel>) {

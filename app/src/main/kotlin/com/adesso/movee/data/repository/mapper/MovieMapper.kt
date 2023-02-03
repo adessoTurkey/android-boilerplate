@@ -15,7 +15,7 @@ class MovieMapper @Inject constructor(
     private val genreMapper: GenreMapper
 ) {
 
-    fun toUiModel(responseModel: MovieResponseModel) = with(responseModel) {
+    fun mapMovie(responseModel: MovieResponseModel) = with(responseModel) {
         MovieUiModel(
             id = id,
             title = title,
@@ -29,7 +29,7 @@ class MovieMapper @Inject constructor(
         )
     }
 
-    fun toUiModel(responseModel: MovieDetailResponseModel) = with(responseModel) {
+    fun mapMovieDetail(responseModel: MovieDetailResponseModel) = with(responseModel) {
         val runtimeString = runtime?.let { runtime ->
             resourceProvider.getString(R.string.movie_detail_message_min_formatted, runtime)
         } ?: resourceProvider.getString(R.string.movie_detail_message_not_specified)
