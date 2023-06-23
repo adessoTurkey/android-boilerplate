@@ -3,11 +3,11 @@ package com.adesso.movee.internal.databinding
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adesso.movee.R
-import com.adesso.movee.base.BaseListAdapter
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.loadImage
 
@@ -24,24 +24,20 @@ fun setVisible(view: View, obj: Any?) {
 
 @BindingAdapter("visibleIf")
 fun visibleIf(view: View, shouldVisible: Boolean) {
-    view.visibility = if (shouldVisible) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
+    view.isVisible = shouldVisible
 }
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("submitList")
 fun submitList(view: RecyclerView, list: List<ListAdapterItem>?) {
-    val adapter = view.adapter as BaseListAdapter<ViewDataBinding, ListAdapterItem>?
+    val adapter = view.adapter as? ListAdapter<ListAdapterItem, *>
     adapter?.submitList(list)
 }
 
 @BindingAdapter("adapter")
-fun setAdapter(view: RecyclerView, adapter: BaseListAdapter<ViewDataBinding, ListAdapterItem>?) {
-    adapter?.let {
-        view.adapter = it
+fun setAdapter(view: RecyclerView, adapter: ListAdapter<ListAdapterItem, *>?) {
+    if (adapter != null) {
+        view.adapter = adapter
     }
 }
 

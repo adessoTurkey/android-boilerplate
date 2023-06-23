@@ -1,6 +1,6 @@
 package com.adesso.movee.scene.splash
 
-import com.adesso.movee.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
-class SplashViewModel @Inject constructor() : BaseViewModel()
+class SplashViewModel @Inject constructor() : ViewModel()
