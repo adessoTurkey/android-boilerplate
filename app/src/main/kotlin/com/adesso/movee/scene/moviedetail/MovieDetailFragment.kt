@@ -1,6 +1,5 @@
 package com.adesso.movee.scene.moviedetail
 
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import com.adesso.movee.R
 import com.adesso.movee.base.BaseFragment
@@ -18,15 +17,18 @@ class MovieDetailFragment :
 
     override fun initialize() {
         initReceivers()
+        viewModel.fetchMovieDetail(args.id)
     }
 
     private fun initReceivers() {
         collectFlow(
-            flow = viewModel.fetchMovieDetail(args.id),
-            minActiveState = Lifecycle.State.STARTED
-        ) {
-            binder.textViewOverview.text = it?.overview
-            binder.layoutMovieDetail.movieDetail = it
+            flow = viewModel.movieDetailFlow
+        ) { movieDetail ->
+
+            movieDetail?.let {
+                binder.layoutMovieDetail.movieDetail = it
+                binder.textViewOverview.text = it.overview
+            }
         }
     }
 }

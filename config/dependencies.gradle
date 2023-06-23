@@ -2,7 +2,7 @@ ext {
 
     compiler = [
             java  : JavaVersion.VERSION_11,
-            kotlin: '1.7.22'
+            kotlin: '1.8.10'
     ]
 
     android = [
@@ -23,7 +23,7 @@ ext {
     ]
 
     version = [
-            gradle             : '7.3.1',
+            gradle             : '7.4.1',
             hilt               : '2.44.2',
             retrofit           : '2.9.0',
             okhttp             : '4.10.0',
@@ -50,16 +50,16 @@ ext {
             ktlint             : '0.45.2',
             jltschKtlintPlugin : '11.0.0',
             jUnit              : '4.13.2',
-            espresso           : '3.5.0',
-            robolectric        : '4.9',
+            espresso           : '3.5.1',
+            robolectric        : '4.9.2',
             arcCoreTesting     : '2.1.0',
-            fragmentTesting    : '1.5.4',
+            fragmentTesting    : '1.5.5',
             testCore           : '1.5.0',
-            testExtJunit       : '1.1.4',
+            testExtJunit       : '1.1.5',
             testRules          : '1.5.0',
-            mockk              : '1.13.2',
+            mockk              : '1.13.4',
             leakcanary         : '2.10',
-            desugar            : '1.1.5',
+            desugar            : '2.0.1',
             kotlinResult       : '1.1.16',
     ]
 

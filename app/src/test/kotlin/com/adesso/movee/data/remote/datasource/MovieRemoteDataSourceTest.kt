@@ -5,14 +5,14 @@ import com.adesso.movee.data.remote.api.MovieService
 import com.adesso.movee.data.remote.model.movie.MovieDetailResponseModel
 import com.adesso.movee.data.remote.model.movie.MovieGenreItemResponseModel
 import com.adesso.movee.internal.util.Failure
-import com.adesso.movee.internal.util.api.State
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.get
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -41,8 +41,6 @@ class MovieRemoteDataSourceTest {
     )
 
     private val apiErrorMessage = "Undefined Movie ID"
-    private val mockMovieDetailFailureModel =
-        Failure.NetworkError(message = apiErrorMessage)
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -73,18 +71,17 @@ class MovieRemoteDataSourceTest {
 
         // given
         coEvery { service.fetchMovieDetail(movieId) } coAnswers {
-            State.Success(mockMovieDetailResponseModel)
+            Ok(mockMovieDetailResponseModel)
         }
 
         // then
-        remoteDataSource.fetchMovieDetailFlow(movieId).collect { state ->
-            assertTrue(state is State.Success)
-            assertEquals(mockMovieDetailResponseModel, (state as State.Success).data)
-        }
+        val result: Result<MovieDetailResponseModel, Failure> = remoteDataSource.fetchMovieDetail(movieId)
+        assertTrue(result is Ok)
+        assertEquals(result.get(), mockMovieDetailResponseModel)
     }
 
     @Test
-    fun `when fetch movie detail called with wrong id should throw failure model`() = runBlocking {
+    fun `when fetch movie detail called with wrong id should throw failure model`(): Unit = runBlocking {
         val movieId = -1L
 
         // given
@@ -93,12 +90,11 @@ class MovieRemoteDataSourceTest {
         }
 
         // then
-        remoteDataSource.fetchMovieDetailFlow(movieId).catch {
-            assertTrue(it is Failure.NetworkError)
-
-            val failure = it as? Failure.NetworkError
-
-            assertEquals(failure?.message, mockMovieDetailFailureModel.message)
-        }.collect()
+        try {
+            remoteDataSource.fetchMovieDetail(movieId)
+        } catch (e: Exception) {
+            assertTrue(e is Failure.NetworkError)
+            assertEquals(e.message, apiErrorMessage)
+        }
     }
 }

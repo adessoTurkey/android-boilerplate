@@ -1,6 +1,9 @@
 package com.adesso.movee.internal.util.api
 
 import com.adesso.movee.internal.util.Failure
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import java.io.IOException
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -26,7 +29,7 @@ class NetworkCallAdapter : CallAdapter.Factory() {
         check(returnType is ParameterizedType) { "Return type must be a parameterized type." }
 
         val responseType = getParameterUpperBound(0, returnType)
-        if (getRawType(responseType) != State::class.java) return null
+        if (getRawType(responseType) != Result::class.java) return null
         check(responseType is ParameterizedType) { "Response type must be a parameterized type." }
 
         val rightType = getParameterUpperBound(0, responseType)
@@ -43,60 +46,68 @@ class NetworkCallAdapter : CallAdapter.Factory() {
 class ResultCallAdapter<R>(
     private val type: Type,
     private val errorConverter: Converter<ResponseBody, Failure.NetworkError>
-) : CallAdapter<R, Call<State<R>>> {
+) : CallAdapter<R, Call<Result<R, Failure>>> {
 
     override fun responseType(): Type = type
 
-    override fun adapt(call: Call<R>): Call<State<R>> = ResultCall(call, type, errorConverter)
+    override fun adapt(call: Call<R>): Call<Result<R, Failure>> = ResultCall(call, type, errorConverter)
 }
 
 private class ResultCall<R> constructor(
     private val delegate: Call<R>,
     private val successType: Type,
     private val errorConverter: Converter<ResponseBody, Failure.NetworkError>
-) : Call<State<R>> {
+) : Call<Result<R, Failure>> {
 
-    override fun enqueue(callback: Callback<State<R>>) = delegate.enqueue(
+    override fun enqueue(callback: Callback<Result<R, Failure>>) = delegate.enqueue(
         object : Callback<R> {
 
             override fun onResponse(call: Call<R>, response: Response<R>) {
                 callback.onResponse(this@ResultCall, Response.success(response.toResult()))
             }
 
-            private fun Response<R>.toResult(): State<R> {
+            private fun Response<R>.toResult(): Result<R, Failure> {
                 if (!isSuccessful) {
-                    val errorBody = errorBody()?.let { errorConverter.convert(it) }
+                    val failure =
+                        if (Failure.NoConnectivityError.errorCode == code() &&
+                            Failure.NoConnectivityError.errorMessage == message()
+                        ) {
+                            Failure.NoConnectivityError
+                        } else {
+                            val errorBody = errorBody()?.let { errorConverter.convert(it) }
+                            Failure.NetworkError(errorBody?.message ?: "")
+                        }
 
-                    return State.Fail(Failure.NetworkError(errorBody?.message ?: ""))
+                    return Err(failure)
                 }
 
                 // Http success response with body
-                body()?.let { body -> return State.Success<R>(body) }
+                body()?.let { body -> return Ok(body) }
 
                 // if we defined Unit as success type it means we expected no response body
                 // e.g. in case of 204 No Content
                 return if (successType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
-                    State.Success(Unit) as State.Success<R>
+                    Ok(Unit) as Result<R, Failure>
                 } else {
-                    State.Fail(Failure.EmptyResponse)
+                    Err(Failure.EmptyResponse)
                 }
             }
 
             override fun onFailure(call: Call<R>, throwable: Throwable) {
-                val error = when (throwable) {
-                    is IOException -> State.Fail(Failure.NetworkError(throwable.message ?: ""))
-                    else -> State.Fail<R>(Failure.UnknownError(throwable.message ?: ""))
-                }
                 Timber.e(throwable)
-                callback.onResponse(this@ResultCall, Response.success(error))
+                val error = when (throwable) {
+                    is IOException -> Failure.NetworkError(throwable.message ?: "")
+                    else -> Failure.UnknownError(throwable.message ?: "")
+                }
+                callback.onResponse(this@ResultCall, Response.success(Err(error)))
             }
         }
     )
 
-    override fun clone(): Call<State<R>> = ResultCall(delegate.clone(), successType, errorConverter)
+    override fun clone(): Call<Result<R, Failure>> = ResultCall(delegate.clone(), successType, errorConverter)
 
-    override fun execute(): Response<State<R>> = throw UnsupportedOperationException()
+    override fun execute(): Response<Result<R, Failure>> = throw UnsupportedOperationException()
 
     override fun isExecuted(): Boolean = delegate.isExecuted
 
@@ -107,9 +118,4 @@ private class ResultCall<R> constructor(
     override fun request(): Request = delegate.request()
 
     override fun timeout(): Timeout = delegate.timeout()
-}
-
-sealed class State<out T> {
-    class Success<T>(val data: T) : State<T>()
-    class Fail<T>(val failure: Failure) : State<T>()
 }

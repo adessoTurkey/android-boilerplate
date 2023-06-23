@@ -1,28 +1,20 @@
 package com.adesso.movee.data.remote
 
 import com.adesso.movee.internal.util.Failure
-import com.adesso.movee.internal.util.api.State
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
 
 open class BaseRemoteDataSource {
 
-    suspend fun <O> invoke(serviceFunction: suspend () -> O): O {
+    suspend fun <O> invoke(serviceFunction: suspend () -> Result<O, Failure>): Result<O, Failure> {
         return try {
             serviceFunction()
         } catch (exception: Exception) {
-            throw asFailure(exception)
+            Err(asFailure(exception))
         }
-    }
-
-    suspend fun <O> invokeFlow(serviceFunction: suspend () -> State<O>): Flow<State<O>> = flow {
-        emit(serviceFunction())
     }
 
     private fun asFailure(exception: Exception): Failure {
-        return when (exception) {
-            is Failure -> exception
-            else -> Failure.UnknownError(exception.message ?: "Unknown error")
-        }
+        return exception as? Failure ?: Failure.UnknownError(exception.message ?: "Unknown error")
     }
 }
