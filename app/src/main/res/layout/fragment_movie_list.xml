@@ -9,25 +9,13 @@
             name="viewModel"
             type="com.adesso.movee.scene.movielist.MovieListViewModel" />
 
-        <variable
-            name="movieAdapter"
-            type="com.adesso.movee.scene.movielist.MovieListAdapter" />
-
     </data>
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_popular_movies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_poplar_movies"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:adapter="@{movieAdapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:submitList="@{viewModel.nowPlayingMovies}"
-            tools:listitem="@layout/item_movie" />
-
-    </FrameLayout>
-
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:submitList="@{viewModel.nowPlayingMovies}"
+        tools:listitem="@layout/item_movie" />
 </layout>

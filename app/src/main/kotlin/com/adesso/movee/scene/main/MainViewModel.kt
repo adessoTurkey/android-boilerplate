@@ -1,8 +1,8 @@
 package com.adesso.movee.scene.main
 
-import com.adesso.movee.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel()
+class MainViewModel @Inject constructor() : ViewModel()

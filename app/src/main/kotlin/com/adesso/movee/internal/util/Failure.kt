@@ -1,6 +1,8 @@
 package com.adesso.movee.internal.util
 
-sealed class Failure : Exception() {
+import java.io.IOException
+
+sealed class Failure : IOException() {
     class NetworkError(override val message: String) : Failure()
     class UnknownError(override val message: String) : Failure()
     object TimeOutError : Failure()

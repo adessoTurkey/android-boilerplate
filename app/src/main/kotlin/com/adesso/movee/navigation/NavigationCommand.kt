@@ -5,8 +5,7 @@ import com.adesso.movee.internal.popup.PopupListener
 import com.adesso.movee.internal.popup.PopupModel
 
 /**
- * A simple sealed class to handle more properly
- * navigation from a [com.adesso.movee.base.BaseViewModel]
+ * A simple sealed class to handle navigation properly from a [androidx.lifecycle.ViewModel]
  */
 sealed class NavigationCommand {
     data class ToDirection(val directions: NavDirections) : NavigationCommand()

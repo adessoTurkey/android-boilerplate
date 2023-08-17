@@ -1,10 +1,10 @@
 package com.adesso.movee.internal.util.api
 
-import java.io.IOException
-import java.net.HttpURLConnection
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import java.io.IOException
+import java.net.HttpURLConnection
 
 /**
  * Retry the request in case of "Account Over Queries Per Second Limit" error

@@ -1,7 +1,9 @@
 package com.adesso.movee.scene.movielist
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adesso.movee.base.BaseViewModel
+import com.adesso.movee.base.handleFailure
+import com.adesso.movee.base.navigate
 import com.adesso.movee.domain.FetchNowPlayingMoviesUseCase
 import com.adesso.movee.internal.util.UseCase
 import com.adesso.movee.scene.movielist.model.MovieUiModel
@@ -17,7 +19,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase
-) : BaseViewModel(), MovieItemListener {
+) : ViewModel(), MovieItemListener {
 
     private val _nowPlayingMovies = MutableStateFlow<List<MovieUiModel>?>(null)
     val nowPlayingMovies: StateFlow<List<MovieUiModel>?>
