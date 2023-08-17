@@ -1,7 +1,6 @@
 package com.adesso.movee.scene.movielist
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.navigate
 import androidx.lifecycle.viewModelScope
 import com.adesso.movee.base.handleFailure
 import com.adesso.movee.base.navigate
@@ -11,11 +10,11 @@ import com.adesso.movee.scene.movielist.model.MovieUiModel
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(

@@ -2,11 +2,11 @@ package com.adesso.movee.internal.util.api
 
 import com.adesso.movee.internal.util.Failure
 import com.adesso.movee.internal.util.NetworkConnectivityListener
-import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
+import javax.inject.Inject
 
 class NetworkConnectivityInterceptor @Inject constructor(
     private val networkConnectivityListener: NetworkConnectivityListener

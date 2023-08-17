@@ -3,8 +3,8 @@ package com.adesso.movee.scene.movielist.model
 import android.os.Parcelable
 import com.adesso.movee.base.ListAdapterItem
 import com.adesso.movee.internal.extension.formatDate
-import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieUiModel(
