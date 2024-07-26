@@ -1,12 +1,12 @@
 package com.adesso.movee.scene.splash
 
 import android.os.Bundle
-import com.adesso.movee.base.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.adesso.movee.scene.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashActivity : BaseActivity<SplashViewModel>() {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

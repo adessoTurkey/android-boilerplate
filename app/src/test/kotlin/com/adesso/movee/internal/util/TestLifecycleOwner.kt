@@ -13,9 +13,11 @@ class TestLifecycleOwner : LifecycleOwner, Lifecycle() {
         lifecycleRegistry.handleLifecycleEvent(Event.ON_RESUME)
     }
 
-    override fun getLifecycle(): Lifecycle = lifecycleRegistry
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
-    override fun getCurrentState(): State = lifecycleRegistry.currentState
+    override val currentState: State
+        get() = lifecycleRegistry.currentState
 
     override fun addObserver(observer: LifecycleObserver) {
         lifecycleRegistry.addObserver(observer)

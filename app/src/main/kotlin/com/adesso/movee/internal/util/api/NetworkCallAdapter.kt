@@ -4,9 +4,6 @@ import com.adesso.movee.internal.util.Failure
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import java.io.IOException
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -17,6 +14,9 @@ import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
 import timber.log.Timber
+import java.io.IOException
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 class NetworkCallAdapter : CallAdapter.Factory() {
 
@@ -97,6 +97,7 @@ private class ResultCall<R> constructor(
             override fun onFailure(call: Call<R>, throwable: Throwable) {
                 Timber.e(throwable)
                 val error = when (throwable) {
+                    is Failure -> throwable
                     is IOException -> Failure.NetworkError(throwable.message ?: "")
                     else -> Failure.UnknownError(throwable.message ?: "")
                 }
