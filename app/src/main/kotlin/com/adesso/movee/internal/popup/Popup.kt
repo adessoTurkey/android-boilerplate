@@ -13,9 +13,9 @@ class Popup(
     init {
         with(alertDialogBuilder) {
             model.title?.let { setTitle(it) }
-            model.titleInt?.let { setTitle(it) }
+            model.titleRes?.let { setTitle(it) }
             model.message?.let { setMessage(it) }
-            model.messageInt?.let { setMessage(it) }
+            model.messageRes?.let { setMessage(it) }
 
             val cancelable = model.cancelable || listener == null
 

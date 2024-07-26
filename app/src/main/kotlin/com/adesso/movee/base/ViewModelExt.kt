@@ -33,17 +33,17 @@ fun ViewModel.handleFailure(failure: Failure, listener: PopupListener? = null) {
 private fun Failure.asPopupModel(): PopupModel {
     return when (this) {
         is Failure.NoConnectivityError ->
-            PopupModel(messageInt = R.string.common_error_network_connection)
+            PopupModel(messageRes = R.string.common_error_network_connection)
 
         is Failure.NetworkError, is Failure.UnknownError ->
             if (message.isNullOrBlank()) {
-                PopupModel(messageInt = R.string.common_error_unknown)
+                PopupModel(messageRes = R.string.common_error_unknown)
             } else {
                 PopupModel(message = message)
             }
 
         is Failure.TimeOutError ->
-            PopupModel(messageInt = R.string.common_error_timeout)
+            PopupModel(messageRes = R.string.common_error_timeout)
 
         else ->
             PopupModel(message = message ?: toString())

@@ -7,7 +7,6 @@ import androidx.lifecycle.navigation
 import androidx.navigation.fragment.findNavController
 import com.adesso.movee.internal.extension.showPopup
 import com.adesso.movee.navigation.NavigationCommand
-import com.adesso.movee.scene.main.MainActivity
 
 interface Navigation {
 
@@ -26,9 +25,7 @@ interface Navigation {
             }
 
             is NavigationCommand.ToDeepLink -> {
-                (activity as? MainActivity)
-                    ?.navController
-                    ?.navigate(command.deepLink.toUri(), null)
+                findNavController().navigate(command.deepLink.toUri(), null)
             }
 
             is NavigationCommand.Popup -> {

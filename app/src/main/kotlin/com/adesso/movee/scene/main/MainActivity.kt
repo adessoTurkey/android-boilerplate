@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binder: ActivityMainBinding
     private val viewModel by viewModels<MainViewModel>()
 
-    val navController: NavController by lazy { findNavController(R.id.main_host_fragment) }
+    private val navController: NavController by lazy { findNavController(R.id.main_host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
